@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const Index = () => {
     return (
         <div>
@@ -46,12 +48,11 @@ const Index = () => {
                             </li>
                         </ul>
                         <div>
-                            <a
-                                className="btn mt-3 bg-primary text-white"
-                                href="userLogin.html"
-                            >
-                                Start Sale
-                            </a>
+                            <Link to="/login">
+                                <div className="btn mt-3 bg-primary text-white">
+                                    Start Sale
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -71,18 +72,19 @@ const Index = () => {
                                 one intuitive POS app.
                             </p>
                             <div className="d-flex flex-wrap">
-                                <a
-                                    className="btn bg-primary text-white me-2 mb-2 mb-sm-0"
-                                    href="userLogin.html"
-                                >
-                                    Start Sale
-                                </a>
-                                <a
-                                    className="btn bg-primary text-white mb-2 mb-sm-0"
-                                    href="userLogin.html"
-                                >
-                                    Login
-                                </a>
+                                <Link to="/login">
+                                    <div className="btn bg-primary text-white me-2 mb-2 mb-sm-0">
+                                        Start Sale
+                                    </div>
+                                </Link>
+                                <Link to="/login">
+                                    <a
+                                        className="btn bg-primary text-white mb-2 mb-sm-0"
+                                        href="login"
+                                    >
+                                        Login
+                                    </a>
+                                </Link>
                             </div>
                         </div>
                         <div className="col-12 col-lg-6 offset-lg-1">
@@ -112,7 +114,7 @@ const Index = () => {
                             <div className="card px-0 text-center">
                                 <img
                                     className="card-img-top mb-3 w-100"
-                                    src="./images/man.jpg"
+                                    src="./images/man1.jpg"
                                     alt=""
                                 />
                                 <h5>Danny Bailey</h5>
@@ -125,7 +127,7 @@ const Index = () => {
                             <div className="card px-0 text-center">
                                 <img
                                     className="card-img-top mb-3 w-100"
-                                    src="./images/man.jpg"
+                                    src="./images/man1.jpg"
                                     alt=""
                                 />
                                 <h5>Danny Bailey</h5>
@@ -138,7 +140,7 @@ const Index = () => {
                             <div className="card px-0 text-center">
                                 <img
                                     className="card-img-top mb-3 w-100"
-                                    src="./images/man.jpg"
+                                    src="./images/man1.jpg"
                                     alt=""
                                 />
                                 <h5>Danny Bailey</h5>
@@ -151,7 +153,7 @@ const Index = () => {
                             <div className="card px-0 text-center">
                                 <img
                                     className="card-img-top mb-3 w-100"
-                                    src="./images/man.jpg"
+                                    src="./images/man1.jpg"
                                     alt=""
                                 />
                                 <h5>Danny Bailey</h5>
@@ -166,7 +168,7 @@ const Index = () => {
 
             <br />
 
-            <section className="py-5">
+            <section id="contact" className="py-5">
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-12 col-lg-5 mb-5 mb-lg-0">
@@ -229,7 +231,7 @@ const Index = () => {
                             </a>
                         </li>
                         <li>
-                            <a className="link-secondary me-4" href="#">
+                            <a className="link-secondary me-4" href="#contact">
                                 Company
                             </a>
                         </li>
@@ -265,7 +267,7 @@ const Index = () => {
                 <div className="mb-5"></div>
                 <div className="container">
                     <p className="text-center">
-                        All rights reserved © Learn with Rabbil (LWR) 2023-2024
+                        ©2025 BizTrack. All rights reserved.
                     </p>
                 </div>
             </footer>
