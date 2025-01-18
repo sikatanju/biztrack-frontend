@@ -8,7 +8,7 @@ const Index = () => {
                     <a className="navbar-brand" href="#">
                         <img
                             className="img-fluid"
-                            src="./images/logo.png"
+                            src="./images/BizTrack_Logo.png"
                             alt=""
                             width="96px"
                         />
@@ -48,7 +48,7 @@ const Index = () => {
                             </li>
                         </ul>
                         <div>
-                            <Link to="/login">
+                            <Link to="/register">
                                 <div className="btn mt-3 bg-primary text-white">
                                     Start Sale
                                 </div>
@@ -117,7 +117,7 @@ const Index = () => {
                                     src="./images/man1.jpg"
                                     alt=""
                                 />
-                                <h5>Danny Bailey</h5>
+                                <h5>Sika Tanju</h5>
                                 <p className="text-muted mb-4">
                                     CEO &amp; Founder
                                 </p>
@@ -130,7 +130,7 @@ const Index = () => {
                                     src="./images/man1.jpg"
                                     alt=""
                                 />
-                                <h5>Danny Bailey</h5>
+                                <h5>Sadaf Rahim</h5>
                                 <p className="text-muted mb-4">
                                     CEO &amp; Founder
                                 </p>
@@ -143,7 +143,7 @@ const Index = () => {
                                     src="./images/man1.jpg"
                                     alt=""
                                 />
-                                <h5>Danny Bailey</h5>
+                                <h5>Abbas Malik</h5>
                                 <p className="text-muted mb-4">
                                     CEO &amp; Founder
                                 </p>
@@ -205,7 +205,7 @@ const Index = () => {
                                     rows={10}
                                     placeholder="Your Message..."
                                 ></textarea>
-                                <button className="btn bg-gradient-primary w-100">
+                                <button className="btn bg-primary text-white w-100">
                                     Action
                                 </button>
                             </form>
@@ -219,7 +219,7 @@ const Index = () => {
                     <a className="d-inline-block mx-auto mb-4" href="#">
                         <img
                             className="img-fluid"
-                            src="./images/logo.png"
+                            src="./images/BizTrack_Logo.png"
                             alt=""
                             width="96px"
                         />

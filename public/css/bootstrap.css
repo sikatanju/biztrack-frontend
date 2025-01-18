@@ -1,4 +1,4 @@
-/*!
+/*
  * Bootstrap v5.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
  * Copyright 2011-2021 Twitter, Inc.
@@ -95,6 +95,15 @@ hr {
 
 hr:not([size]) {
     height: 1px;
+}
+
+.primary-color-mine {
+    color: var(--bs-gray-800);
+}
+
+.register-login {
+    color: var(--bs-indigo);
+    font-weight: 600;
 }
 
 h1,
