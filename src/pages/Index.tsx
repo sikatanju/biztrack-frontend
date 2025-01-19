@@ -221,7 +221,7 @@ const Index = () => {
                             className="img-fluid"
                             src="./images/BizTrack_Logo.png"
                             alt=""
-                            width="96px"
+                            width="152px"
                         />
                     </a>
                     <ul className="d-flex flex-wrap justify-content-center align-items-center list-unstyled mb-4">

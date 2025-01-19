@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router";
+import apiClient from "../utils/apiClient";
 
 const Login = () => {
     const [email, setEmail] = useState<string>("");
@@ -15,15 +15,20 @@ const Login = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // console.log(localStorage);
+        console.log(e)
         if (email && password) {
             console.log(email + " " + password);
-            axios
-                .post("https://inventory-api.teamrabbil.com/api/user-login", {
+            apiClient
+                .post("/user-login", {
                     email: email,
                     password: password,
                 })
                 .then((res) => {
-                    console.log(res.data);
+                    if (res.data.status === "success") {
+                        console.log(res.data.token);
+                        localStorage.setItem("token", res.data.token);
+                    }
                 })
                 .catch((e) => {
                     console.log(e);
