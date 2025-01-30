@@ -1,10 +1,13 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import apiClient from "../utils/apiClient";
 
 const Login = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [error, setError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
@@ -13,10 +16,19 @@ const Login = () => {
         setPassword(e.target.value);
     };
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        console.log(token);
+
+        if (token) {
+            navigate("/dashboard");
+        }
+    }, [navigate]);
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // console.log(localStorage);
-        console.log(e)
+        setError(false);
+
         if (email && password) {
             console.log(email + " " + password);
             apiClient
@@ -28,6 +40,13 @@ const Login = () => {
                     if (res.data.status === "success") {
                         console.log(res.data.token);
                         localStorage.setItem("token", res.data.token);
+                        navigate("/dashboard");
+                    } else if (res.data.status === "failed") {
+                        setError(true);
+                        console.log(res.data);
+                        setErrorMessage(
+                            "Email or Password is incorrect! Please try again."
+                        );
                     }
                 })
                 .catch((e) => {
@@ -72,6 +91,15 @@ const Login = () => {
                                     </button>
                                 </form>
                                 <hr />
+                                {error && (
+                                    <div className="float-end mt-3">
+                                        <span>
+                                            <p className="text-center ms-3 h6 text-danger">
+                                                {errorMessage}
+                                            </p>
+                                        </span>
+                                    </div>
+                                )}
                                 <div className="float-end mt-3">
                                     <span>
                                         <Link to="/register">

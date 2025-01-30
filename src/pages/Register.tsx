@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import apiClient from "../utils/apiClient";
 
 const Register = () => {
+    const navigate = useNavigate();
+
     const [firstName, setFirstName] = useState<string | undefined>();
     const [lastName, setLastName] = useState<string | undefined>();
     const [email, setEmail] = useState<string | undefined>();
@@ -47,6 +49,13 @@ const Register = () => {
         return true;
     };
 
+    const handleNavigation = () => {
+        setRegistrationComplete(true);
+        setTimeout(() => {
+            navigate("/login");
+        }, 3000);
+    };
+
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         apiClient
@@ -60,11 +69,13 @@ const Register = () => {
             .then((res) => {
                 console.log(res);
                 if (res.data.status === "failed") {
-                    console.log(res.data.message);
+                    // console.log(res.data.message);
                     setRegistrationComplete(true);
+                    handleNavigation();
                 } else if (res.data.status === "success") {
-                    console.log("success");
+                    // console.log("success");
                     setRegistrationComplete(true);
+                    navigate("/login");
                 }
             })
             .catch((e) => console.log(e.message));
