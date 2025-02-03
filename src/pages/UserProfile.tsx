@@ -2,29 +2,54 @@
 import { useEffect, useState } from "react";
 import apiClient from "../utils/apiClient";
 
+interface UserData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    mobile: string;
+    password: string;
+}
+
 const UserProfile = () => {
-    const [firstName, setFirstName] = useState<string | undefined>();
-    const [lastName, setLastName] = useState<string | undefined>();
-    const [email, setEmail] = useState<string | undefined>();
-    const [mobile, setMobile] = useState<string | undefined>();
-    const [password, setPassword] = useState<string | undefined>();
+    const [userData, setUserData] = useState<UserData>({
+        firstName: "",
+        lastName: "",
+        email: "",
+        mobile: "",
+        password: "",
+    });
 
-    const handleFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFirstName(e.target.value);
-    };
-    const handleLastName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLastName(e.target.value);
-    };
-    const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
-    const handleMobile = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setMobile(e.target.value);
+    const handleUserDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setUserData((prev) => ({ ...prev, [name]: value }));
+
+        console.log(e.target.name);
     };
 
-    const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newPassword = e.target.value;
-        setPassword(newPassword);
+    const [updateMessage, setUpdateMessage] = useState<string | null>(null);
+
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        apiClient
+            .post("/user-update", {
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email: userData.email,
+                mobile: userData.mobile,
+                password: userData.password,
+            })
+            .then((res) => {
+                console.log(res.data);
+                if (res.data.status === "success") {
+                    setUpdateMessage("Profile has been updated successfully");
+                    setTimeout(() => {
+                        setUpdateMessage(null);
+                    }, 2000);
+                }
+            })
+            .catch((e) => {
+                console.log(e.message);
+            });
     };
 
     useEffect(() => {
@@ -32,12 +57,15 @@ const UserProfile = () => {
             .get("/user-profile")
             .then((res) => {
                 if (res.data.status === "success") {
-                    const data = res.data.data;
-                    setFirstName(data.firstName);
-                    setLastName(data.lastName);
-                    setEmail(data.email);
-                    setMobile(data.mobile);
-                    setPassword(data.password);
+                    const { firstName, lastName, email, mobile, password } =
+                        res.data.data;
+                    setUserData({
+                        firstName,
+                        lastName,
+                        email,
+                        mobile,
+                        password,
+                    });
                 }
             })
             .catch((error) => {
@@ -46,20 +74,16 @@ const UserProfile = () => {
     }, []);
 
     return (
-        <>
-            <div id="contentRef" className="content">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12 col-lg-12">
-                            <div className="card animated fadeIn w-100 p-3">
-                                <div className="card-body">
-                                    <h4>
-                                        {firstName
-                                            ? `${firstName}'s Profile`
-                                            : "User Profile"}
-                                    </h4>
-                                    <hr />
-                                    <div className="container-fluid m-0 p-0">
+        <div id="contentRef" className="content">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12 col-lg-12">
+                        <div className="card animated fadeIn w-100 p-3">
+                            <div className="card-body">
+                                <h4>User Profile</h4>
+                                <hr />
+                                <div className="container-fluid m-0 p-0">
+                                    <form onSubmit={handleFormSubmit}>
                                         <div className="row m-0 p-0">
                                             <div className="col-md-4 p-2">
                                                 <label>Email Address</label>
@@ -69,8 +93,10 @@ const UserProfile = () => {
                                                     placeholder="User Email"
                                                     className="form-control"
                                                     type="email"
-                                                    value={email}
-                                                    onChange={handleEmail}
+                                                    value={userData.email}
+                                                    onChange={
+                                                        handleUserDataChange
+                                                    }
                                                 />
                                             </div>
                                             <div className="col-md-4 p-2">
@@ -80,8 +106,11 @@ const UserProfile = () => {
                                                     placeholder="First Name"
                                                     className="form-control"
                                                     type="text"
-                                                    value={firstName}
-                                                    onChange={handleFirstName}
+                                                    name="firstName"
+                                                    value={userData.firstName}
+                                                    onChange={
+                                                        handleUserDataChange
+                                                    }
                                                 />
                                             </div>
                                             <div className="col-md-4 p-2">
@@ -91,8 +120,11 @@ const UserProfile = () => {
                                                     placeholder="Last Name"
                                                     className="form-control"
                                                     type="text"
-                                                    value={lastName}
-                                                    onChange={handleLastName}
+                                                    name="lastName"
+                                                    value={userData.lastName}
+                                                    onChange={
+                                                        handleUserDataChange
+                                                    }
                                                 />
                                             </div>
                                             <div className="col-md-4 p-2">
@@ -102,42 +134,103 @@ const UserProfile = () => {
                                                     placeholder="Mobile"
                                                     className="form-control"
                                                     type="mobile"
-                                                    value={mobile}
-                                                    onChange={handleMobile}
+                                                    name="mobile"
+                                                    value={userData.mobile}
+                                                    onChange={
+                                                        handleUserDataChange
+                                                    }
                                                 />
                                             </div>
                                             <div className="col-md-4 p-2">
                                                 <label>Password</label>
                                                 <input
                                                     id="password"
-                                                    placeholder="User Password"
+                                                    placeholder="New Password"
                                                     className="form-control"
                                                     type="password"
-                                                    value={password}
-                                                    onChange={handlePassword}
+                                                    name="password"
+                                                    value={userData.password}
+                                                    onChange={
+                                                        handleUserDataChange
+                                                    }
                                                 />
                                             </div>
                                         </div>
                                         <div className="row m-0 p-0">
                                             <div className="col-md-4 p-2">
-                                                <button
-                                                    onClick={() =>
-                                                        console.log("hello")
-                                                    }
-                                                    className="btn mt-3 w-100  bg-gradient-primary"
-                                                >
+                                                <button className="btn mt-3 w-100  bg-primary text-white">
                                                     Update
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
+                                        {updateMessage && (
+                                            <div className="row m-0 p-0">
+                                                <p className="text-success">
+                                                    {updateMessage}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </form>
                                 </div>
                             </div>
                         </div>
+                        {/* <div className="card animated fadeIn w-100 p-3">
+                            <div className="card-body">
+                                <h4>Change Password</h4>
+                                <hr />
+                                <div className="container-fluid m-0 p-0">
+                                    <div className="row m-0 p-0">
+                                        <div className="col-md-4 p-2">
+                                            <label>Old Password</label>
+                                            <input
+                                                id="password"
+                                                placeholder="New Password"
+                                                className="form-control"
+                                                type="password"
+                                                value={password}
+                                                onChange={handlePassword}
+                                            />
+                                        </div>
+                                        <div className="col-md-4 p-2">
+                                            <label>New Password</label>
+                                            <input
+                                                id="password"
+                                                placeholder="New Password"
+                                                className="form-control"
+                                                type="password"
+                                                value={password}
+                                                onChange={handlePassword}
+                                            />
+                                        </div>
+                                        <div className="col-md-4 p-2">
+                                            <label>Repeat New Password</label>
+                                            <input
+                                                id="password"
+                                                placeholder="New Password"
+                                                className="form-control"
+                                                type="password"
+                                                value={password}
+                                                onChange={handlePassword}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="row m-0 p-0">
+                                        <div className="col-md-4 p-2">
+                                            <button
+                                                disabled
+                                                className="btn mt-3 w-100  bg-primary text-white"
+                                            >
+                                                Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

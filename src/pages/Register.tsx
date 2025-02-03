@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import apiClient from "../utils/apiClient";
 
@@ -80,6 +80,15 @@ const Register = () => {
             })
             .catch((e) => console.log(e.message));
     };
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        console.log(token);
+
+        if (token) {
+            navigate("/dashboard");
+        }
+    }, [navigate]);
 
     return (
         <div>
