@@ -2066,7 +2066,7 @@
         });
       });
     };
-  } // eslint-disable-next-line import/no-unused-modules
+  } 
 
 
   const applyStyles$1 = {
@@ -2083,7 +2083,7 @@
   }
 
   // import { isHTMLElement } from './instanceOf';
-  function getBoundingClientRect(element, // eslint-disable-next-line unused-imports/no-unused-vars
+  function getBoundingClientRect(element,
   includeScale) {
 
     var rect = element.getBoundingClientRect();
@@ -2356,7 +2356,7 @@
     }
 
     state.elements.arrow = arrowElement;
-  } // eslint-disable-next-line import/no-unused-modules
+  }
 
 
   const arrow$1 = {
@@ -2502,7 +2502,7 @@
     state.attributes.popper = Object.assign({}, state.attributes.popper, {
       'data-popper-placement': state.placement
     });
-  } // eslint-disable-next-line import/no-unused-modules
+  }
 
 
   const computeStyles$1 = {
@@ -2549,7 +2549,7 @@
         window.removeEventListener('resize', instance.update, passive);
       }
     };
-  } // eslint-disable-next-line import/no-unused-modules
+  } 
 
 
   const eventListeners = {
@@ -3063,7 +3063,7 @@
       state.placement = firstFittingPlacement;
       state.reset = true;
     }
-  } // eslint-disable-next-line import/no-unused-modules
+  }
 
 
   const flip$1 = {
@@ -3125,8 +3125,7 @@
       'data-popper-reference-hidden': isReferenceHidden,
       'data-popper-escaped': hasPopperEscaped
     });
-  } // eslint-disable-next-line import/no-unused-modules
-
+  }
 
   const hide$1 = {
     name: 'hide',
@@ -3177,8 +3176,7 @@
     }
 
     state.modifiersData[name] = data;
-  } // eslint-disable-next-line import/no-unused-modules
-
+  }
 
   const offset$1 = {
     name: 'offset',
@@ -3201,8 +3199,7 @@
       strategy: 'absolute',
       placement: state.placement
     });
-  } // eslint-disable-next-line import/no-unused-modules
-
+  }
 
   const popperOffsets$1 = {
     name: 'popperOffsets',
@@ -3317,8 +3314,7 @@
     }
 
     state.modifiersData[name] = data;
-  } // eslint-disable-next-line import/no-unused-modules
-
+  }
 
   const preventOverflow$1 = {
     name: 'preventOverflow',
@@ -3658,17 +3654,17 @@
       return instance;
     };
   }
-  var createPopper$2 = /*#__PURE__*/popperGenerator(); // eslint-disable-next-line import/no-unused-modules
+  var createPopper$2 = /*#__PURE__*/popperGenerator();
 
   var defaultModifiers$1 = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1];
   var createPopper$1 = /*#__PURE__*/popperGenerator({
     defaultModifiers: defaultModifiers$1
-  }); // eslint-disable-next-line import/no-unused-modules
+  });
 
   var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
   var createPopper = /*#__PURE__*/popperGenerator({
     defaultModifiers: defaultModifiers
-  }); // eslint-disable-next-line import/no-unused-modules
+  });
 
   const Popper = /*#__PURE__*/Object.freeze({
     __proto__: null,

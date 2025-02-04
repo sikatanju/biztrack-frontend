@@ -17,7 +17,7 @@ const Sidebar = () => {
                 </a>
             </Link>
 
-            <Link to="#">
+            <Link to="/category">
                 <a href="#" className="side-bar-item">
                     <i className="bi bi-list-nested"></i>
                     <span className="side-bar-item-caption">Category</span>

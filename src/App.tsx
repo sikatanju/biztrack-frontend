@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { BrowserRouter, Route, Routes } from "react-router";
 import "./App.css";
 import Index from "./pages/Index";
@@ -6,6 +7,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import UserProfile from "./pages/UserProfile";
 import DashboardLayout from "./components/DashboardLayout";
+import Category from "./pages/Category";
 
 function App() {
     return (
@@ -17,6 +19,7 @@ function App() {
                 <Route path="/" element={<DashboardLayout />}>
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="profile" element={<UserProfile />} />
+                    <Route path="category" element={<Category />} />
                 </Route>
                 <Route path="/profile" element={<UserProfile />} />
             </Routes>

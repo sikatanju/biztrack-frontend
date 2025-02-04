@@ -1,6 +1,52 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import { useEffect, useState } from "react";
+import apiClient from "../utils/apiClient";
+
+interface DashboardData {
+    product: number;
+    category: number;
+    customer: number;
+    invoice: number;
+    total: number;
+    vat: number;
+    payable: number;
+}
+
 const Dashboard = () => {
+    const [data, setData] = useState<DashboardData>({
+        product: 0,
+        category: 0,
+        customer: 0,
+        invoice: 0,
+        total: 0,
+        vat: 0,
+        payable: 0,
+    });
+    useEffect(() => {
+        apiClient.get("/summary").then((res) => {
+            // console.log(res.data);
+            const {
+                product,
+                category,
+                customer,
+                invoice,
+                total,
+                vat,
+                payable,
+            } = res.data;
+            setData({
+                product,
+                category,
+                customer,
+                invoice,
+                total,
+                vat,
+                payable,
+            });
+        });
+    }, []);
+
     return (
         <div id="contentRef" className="content">
             <div className="container-fluid">
@@ -12,7 +58,9 @@ const Dashboard = () => {
                                     <div className="col-9 col-lg-8 col-md-8 col-sm-9">
                                         <div>
                                             <h5 className="mb-0 text-capitalize font-weight-bold">
-                                                <span id="product">0</span>
+                                                <span id="product">
+                                                    {data.product}
+                                                </span>
                                             </h5>
                                             <p className="mb-0 text-sm">
                                                 Product
@@ -39,7 +87,9 @@ const Dashboard = () => {
                                     <div className="col-9 col-lg-8 col-md-8 col-sm-9">
                                         <div>
                                             <h5 className="mb-0 text-capitalize font-weight-bold">
-                                                <span id="category">1</span>
+                                                <span id="category">
+                                                    {data.category}
+                                                </span>
                                             </h5>
                                             <p className="mb-0 text-sm">
                                                 Category
@@ -66,7 +116,9 @@ const Dashboard = () => {
                                     <div className="col-9 col-lg-8 col-md-8 col-sm-9">
                                         <div>
                                             <h5 className="mb-0 text-capitalize font-weight-bold">
-                                                <span id="customer">1</span>
+                                                <span id="customer">
+                                                    {data.customer}
+                                                </span>
                                             </h5>
                                             <p className="mb-0 text-sm">
                                                 Customer
@@ -93,7 +145,9 @@ const Dashboard = () => {
                                     <div className="col-9 col-lg-8 col-md-8 col-sm-9">
                                         <div>
                                             <h5 className="mb-0 text-capitalize font-weight-bold">
-                                                <span id="invoice">0</span>
+                                                <span id="invoice">
+                                                    {data.invoice}
+                                                </span>
                                             </h5>
                                             <p className="mb-0 text-sm">
                                                 Invoice
@@ -120,7 +174,10 @@ const Dashboard = () => {
                                     <div className="col-9 col-lg-8 col-md-8 col-sm-9">
                                         <div>
                                             <h5 className="mb-0 text-capitalize font-weight-bold">
-                                                $ <span id="total">0</span>
+                                                ${" "}
+                                                <span id="total">
+                                                    {data.total}
+                                                </span>
                                             </h5>
                                             <p className="mb-0 text-sm">
                                                 Total Sale
@@ -147,7 +204,8 @@ const Dashboard = () => {
                                     <div className="col-9 col-lg-8 col-md-8 col-sm-9">
                                         <div>
                                             <h5 className="mb-0 text-capitalize font-weight-bold">
-                                                $ <span id="vat">0</span>
+                                                ${" "}
+                                                <span id="vat">{data.vat}</span>
                                             </h5>
                                             <p className="mb-0 text-sm">
                                                 Vat Collection
@@ -174,7 +232,7 @@ const Dashboard = () => {
                                     <div className="col-9 col-lg-8 col-md-8 col-sm-9">
                                         <div>
                                             <h5 className="mb-0 text-capitalize font-weight-bold">
-                                                $ <span id="payable">0</span>
+                                                $ <span id="payable">{data.payable}</span>
                                             </h5>
                                             <p className="mb-0 text-sm">
                                                 Total Collection

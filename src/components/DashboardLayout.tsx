@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Navbar from "./Navbar";
 import { Outlet, useNavigate } from "react-router";
+import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 
 const DashboardLayout = () => {
@@ -9,7 +9,7 @@ const DashboardLayout = () => {
 
     useEffect(() => {
         if (!localStorage.getItem("token")) navigate("/");
-    }, []);
+    }, [navigate]);
 
     const handleSideBar = () => {
         setShowSideBar(!showSideBar);
@@ -26,7 +26,9 @@ const DashboardLayout = () => {
         <>
             <Navbar handleLogout={handleLogout} handleSideBar={handleSideBar} />
             <Sidebar />
-            <Outlet />
+            <main>
+                <Outlet />
+            </main>
         </>
     );
 };
