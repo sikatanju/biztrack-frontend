@@ -48,7 +48,7 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div id="contentRef" className="content">
+        <div>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 animated fadeIn p-2">
@@ -232,7 +232,10 @@ const Dashboard = () => {
                                     <div className="col-9 col-lg-8 col-md-8 col-sm-9">
                                         <div>
                                             <h5 className="mb-0 text-capitalize font-weight-bold">
-                                                $ <span id="payable">{data.payable}</span>
+                                                ${" "}
+                                                <span id="payable">
+                                                    {data.payable}
+                                                </span>
                                             </h5>
                                             <p className="mb-0 text-sm">
                                                 Total Collection
