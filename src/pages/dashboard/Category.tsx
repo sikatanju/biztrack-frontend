@@ -4,6 +4,7 @@ import apiClient from "../../utils/apiClient";
 import { createDataTable, destroyDataTable } from "../../utils/createDataTable";
 import CreateCategoryModal from "../../components/modals/category/CreateCategoryModal";
 import UpdateCategoryModal from "../../components/modals/category/UpdateCategoryModal";
+import DeleteCategoryModal from "../../components/modals/category/DeleteCategoryModal";
 
 export interface Category {
     id: number;
@@ -20,16 +21,23 @@ const Category = () => {
     const dataTable = useRef<HTMLTableElement>(null);
     const dataTableInstance = useRef<DataTables.Api | null>(null);
 
-    const [updateId, setUpdateId] = useState<number>(-1);
+    const [updateCategoryId, setUpdateCategoryId] = useState<number>(-1);
+    const [deleteCategoryId, setDeleteCategoryId] = useState<number>(-1);
 
     const reloadPage = () => {
-        setUpdateId(-1);
+        setDeleteCategoryId(-1);
+        setUpdateCategoryId(-1);
         loadCategoryData();
     };
 
     const handleUpdateCategory = (categoryId: number) => {
         console.log("Updating an existing category -- " + categoryId);
-        setUpdateId(categoryId);
+        setUpdateCategoryId(categoryId);
+    };
+
+    const handleDeleteCategory = (categoryId: number) => {
+        console.log("Deleting a category with an id -- " + categoryId);
+        setDeleteCategoryId(categoryId);
     };
 
     const loadCategoryData = () => {
@@ -37,7 +45,8 @@ const Category = () => {
         apiClient
             .get<Category[]>("/list-category")
             .then(({ data: list }) => {
-                // console.log(list);
+                console.log(list);
+
                 setCategoryList(list);
                 setIsLoading(false);
             })
@@ -144,6 +153,11 @@ const Category = () => {
                                                         data-bs-target="#delete-modal"
                                                         type="button"
                                                         className="btn deleteBtn btn-sm btn-outline-danger mx-1"
+                                                        onClick={() => {
+                                                            handleDeleteCategory(
+                                                                category.id
+                                                            );
+                                                        }}
                                                     >
                                                         Delete
                                                     </button>
@@ -161,7 +175,11 @@ const Category = () => {
             <CreateCategoryModal reloadPage={reloadPage} />
             <UpdateCategoryModal
                 reloadPage={reloadPage}
-                categoryId={updateId}
+                categoryId={updateCategoryId}
+            />
+            <DeleteCategoryModal
+                reloadPage={reloadPage}
+                categoryId={deleteCategoryId}
             />
         </div>
     );

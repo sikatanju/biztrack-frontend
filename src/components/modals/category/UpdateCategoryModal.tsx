@@ -8,22 +8,16 @@ interface Props {
 
 const UpdateCategoryModal = ({ categoryId, reloadPage }: Props) => {
     const closeButton = useRef<HTMLButtonElement | null>(null);
-    const [newCategoryName, setNewCategoryName] = useState<
-        string | undefined
-    >();
-    const handleCategoryInputChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const [newCategoryName, setNewCategoryName] = useState<string>();
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewCategoryName(e.target.value);
     };
 
     const handleUpdateCategory = () => {
-        if (categoryId !== -1 && newCategoryName) {
-            console.log(newCategoryName);
-            console.log(categoryId);
-
+        if (categoryId !== -1) {
             apiClient
-                .post("update-category", {
+                .post("/update-category", {
                     name: newCategoryName,
                     id: categoryId,
                 })
@@ -67,7 +61,7 @@ const UpdateCategoryModal = ({ categoryId, reloadPage }: Props) => {
                                             className="form-control"
                                             id="categoryNameUpdate"
                                             value={newCategoryName}
-                                            onChange={handleCategoryInputChange}
+                                            onChange={handleInputChange}
                                         />
                                     </div>
                                 </div>
@@ -87,7 +81,6 @@ const UpdateCategoryModal = ({ categoryId, reloadPage }: Props) => {
                         <button
                             id="update-btn"
                             className="btn bg-gradient-success"
-                            form="update-form"
                             onClick={handleUpdateCategory}
                         >
                             Update
