@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { useEffect, useState } from "react";
-import apiClient from "../utils/apiClient";
+import apiClient from "../../utils/apiClient";
 
 interface DashboardData {
     product: number;
@@ -14,6 +14,7 @@ interface DashboardData {
 }
 
 const Dashboard = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [data, setData] = useState<DashboardData>({
         product: 0,
         category: 0,
@@ -24,6 +25,7 @@ const Dashboard = () => {
         payable: 0,
     });
     useEffect(() => {
+        setIsLoading(true);
         apiClient.get("/summary").then((res) => {
             // console.log(res.data);
             const {
@@ -44,8 +46,19 @@ const Dashboard = () => {
                 vat,
                 payable,
             });
+            setIsLoading(false);
         });
     }, []);
+
+    if (isLoading) {
+        return (
+            <div id="loader" className="LoadingOverlay">
+                <div className="Line-Progress">
+                    <div className="indeterminate"></div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div>

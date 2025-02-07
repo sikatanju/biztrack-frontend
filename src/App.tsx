@@ -4,10 +4,10 @@ import "./App.css";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/dashboard/Dashboard";
 import UserProfile from "./pages/UserProfile";
 import DashboardLayout from "./components/DashboardLayout";
-import Category from "./pages/Category";
+import Category from "./pages/dashboard/Category";
 
 function App() {
     return (
