@@ -22,8 +22,6 @@ const UserProfile = () => {
     const handleUserDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setUserData((prev) => ({ ...prev, [name]: value }));
-
-        console.log(e.target.name);
     };
 
     const [updateMessage, setUpdateMessage] = useState<string | null>(null);
@@ -74,7 +72,7 @@ const UserProfile = () => {
     }, []);
 
     return (
-        <div id="contentRef" className="content">
+        <div>
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 col-lg-12">
