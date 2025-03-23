@@ -81,7 +81,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
-                                        <div className="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                        <div className="icon icon-shape bg-secondary shadow float-end border-radius-md">
                                             <img
                                                 className="w-100 "
                                                 src="./images/icon.svg"
@@ -110,7 +110,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
-                                        <div className="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                        <div className="icon icon-shape bg-secondary shadow float-end border-radius-md">
                                             <img
                                                 className="w-100 "
                                                 src="./images/icon.svg"
@@ -139,7 +139,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
-                                        <div className="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                        <div className="icon icon-shape bg-secondary shadow float-end border-radius-md">
                                             <img
                                                 className="w-100 "
                                                 src="./images/icon.svg"
@@ -168,7 +168,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
-                                        <div className="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                        <div className="icon icon-shape bg-secondary shadow float-end border-radius-md">
                                             <img
                                                 className="w-100 "
                                                 src="./images/icon.svg"
@@ -198,7 +198,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
-                                        <div className="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                        <div className="icon icon-shape bg-secondary shadow float-end border-radius-md">
                                             <img
                                                 className="w-100 "
                                                 src="./images/icon.svg"
@@ -226,7 +226,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
-                                        <div className="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                        <div className="icon icon-shape bg-secondary shadow float-end border-radius-md">
                                             <img
                                                 className="w-100 "
                                                 src="./images/icon.svg"
@@ -256,7 +256,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="col-3 col-lg-4 col-md-4 col-sm-3 text-end">
-                                        <div className="icon icon-shape bg-gradient-primary shadow float-end border-radius-md">
+                                        <div className="icon icon-shape bg-secondary shadow float-end border-radius-md">
                                             <img
                                                 className="w-100 "
                                                 src="./images/icon.svg"

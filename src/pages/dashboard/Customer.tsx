@@ -93,7 +93,7 @@ const Customer = () => {
                                     <button
                                         data-bs-toggle="modal"
                                         data-bs-target="#create-modal"
-                                        className="float-end btn m-0 bg-gradient-primary"
+                                        className="float-end btn m-0 bg-primary text-white"
                                     >
                                         Create
                                     </button>

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Category } from "../../../pages/dashboard/Category";
 import apiClient from "../../../utils/apiClient";
 
@@ -13,15 +13,17 @@ export interface NewProduct {
 }
 
 interface Props {
-    fetchProducts: () => void;
+    realoadPage: () => void;
 }
 
-const CreateProductModal = ({ fetchProducts }: Props) => {
+const CreateProductModal = ({ realoadPage }: Props) => {
     const [error, setError] = useState<boolean>(false);
     const [errorMsg, setErrorMsg] = useState<string>("");
 
     const [newImage, setNewImage] = useState<string>();
     const [categoryList, setCategoryList] = useState<Category[]>();
+
+    const closeBtn = useRef<HTMLButtonElement>(null);
 
     const [newProduct, setNewProduct] = useState<NewProduct>({
         id: "",
@@ -44,6 +46,7 @@ const CreateProductModal = ({ fetchProducts }: Props) => {
             const file = e.target.files[0];
             setNewProduct((prev) => ({ ...prev, img: file }));
             setNewImage(URL.createObjectURL(e.target.files[0]));
+            setError(false);
         }
     };
 
@@ -56,16 +59,13 @@ const CreateProductModal = ({ fetchProducts }: Props) => {
             setError(true);
             setErrorMsg("Please select an image.");
         }
-
         const formData = new FormData();
         formData.append("name", newProduct.name);
-        formData.append("price", newProduct.price);
+        formData.append("price", parseFloat(newProduct.price).toFixed(2));
         formData.append("unit", newProduct.unit);
         formData.append("category_id", newProduct.category_id);
         if (newProduct.img) formData.append("img", newProduct.img);
-
-        console.log(formData.get("img"));
-        console.log(formData);
+        if (closeBtn.current) closeBtn.current.click();
 
         apiClient
             .post("/create-product", formData, {
@@ -75,7 +75,7 @@ const CreateProductModal = ({ fetchProducts }: Props) => {
             })
             .then((res) => {
                 console.log("Upload Success:", res);
-                fetchProducts();
+                realoadPage();
             })
             .catch((e) => {
                 console.error("Upload Error:", e);
@@ -196,6 +196,7 @@ const CreateProductModal = ({ fetchProducts }: Props) => {
                             data-bs-dismiss="modal"
                             aria-label="Close"
                             onClick={handleClose}
+                            ref={closeBtn}
                         >
                             Close
                         </button>

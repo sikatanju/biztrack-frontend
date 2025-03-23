@@ -6,10 +6,9 @@ import CreateProductModal, {
 import apiClient from "../../utils/apiClient";
 import { createDataTable, destroyDataTable } from "../../utils/createDataTable";
 import UpdateProductModal from "../../components/modals/product/UpdateProductModal";
-import Category from "./Category";
 import DeleteProductModal from "../../components/modals/product/DeleteProductModal";
 
-interface Product {
+export interface Product {
     id: number;
     user_id: number;
     category_id: number;
@@ -112,7 +111,7 @@ const ProductPage = () => {
                                     <button
                                         data-bs-toggle="modal"
                                         data-bs-target="#create-modal"
-                                        className="float-end btn m-0  bg-gradient-primary"
+                                        className="float-end btn m-0  bg-primary text-white"
                                     >
                                         Create
                                     </button>
@@ -182,7 +181,7 @@ const ProductPage = () => {
                     </div>
                 </div>
             </div>
-            <CreateProductModal fetchProducts={reloadPage} />
+            <CreateProductModal realoadPage={reloadPage} />
             <UpdateProductModal
                 product={updateProduct}
                 reloadPage={reloadPage}
