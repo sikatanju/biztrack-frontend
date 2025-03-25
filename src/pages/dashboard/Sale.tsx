@@ -7,6 +7,7 @@ import {
     destroyDataTable,
 } from "../../utils/createDataTable";
 import { Product } from "./ProductPage";
+import { useNavigate } from "react-router";
 
 interface Cart {
     product_id: number;
@@ -14,6 +15,12 @@ interface Cart {
     sale_price: string;
     product_name: string;
     subTotal: number;
+}
+interface ProductInt {
+    product_name: string;
+    product_id: string;
+    qty: string;
+    sale_price: string;
 }
 
 const Sale = () => {
@@ -32,9 +39,6 @@ const Sale = () => {
     const productTable = useRef<HTMLTableElement>(null);
     const productTableInstance = useRef<DataTables.Api | null>(null);
 
-    // const cartTable = useRef<HTMLTableElement>(null);
-    // const cartTableInstance = useRef<DataTables.Api | null>(null);
-
     const closeBtn = useRef<HTMLButtonElement>(null);
 
     const [customerName, setCustomerName] = useState<string>("");
@@ -47,6 +51,8 @@ const Sale = () => {
     const [productQnt, setProductQnt] = useState<number>();
 
     const [cart, setCart] = useState<Cart[]>([]);
+
+    const navigate = useNavigate();
 
     const handleCustomerSelect = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
@@ -75,26 +81,11 @@ const Sale = () => {
         setProductQnt(Number.parseInt(e.target.value));
     };
 
-    const handleDiscount = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const num = parseFloat(e.target.value);
-        if (num > 100) setDiscount(0);
-        else if (!isNaN(num)) {
-            const one = subtotal / 100;
-
-            const ss = parseFloat(
-                (one * parseFloat(e.target.value)).toFixed(2)
-            );
-            console.log(ss);
-            setDiscount(ss);
-        } else setDiscount(0);
-    };
-
     const addToCart = () => {
         if (productId && productPrice && productQnt && productName) {
             const temp = parseFloat(
                 (productQnt * parseFloat(productPrice)).toFixed(2)
             );
-            console.log(temp);
             const newItem = {
                 product_id: Number.parseInt(productId),
                 qty: productQnt,
@@ -103,17 +94,16 @@ const Sale = () => {
                 subTotal: temp,
             };
             setCart((prev) => [...prev, newItem]);
-            setSubtotal((prev) => prev + temp);
+            const newPrice = subtotal + temp;
+            setSubtotal(parseFloat(newPrice.toFixed(2)));
             if (closeBtn.current) closeBtn.current.click();
         }
     };
 
     const removeFromCart = (id: number, price: number) => {
         const newCart = cart.filter((pro) => pro.product_id !== id);
-        console.log(price);
-        price = parseFloat(price.toFixed(2));
-        console.log(parseFloat(price.toPrecision(2)));
-        setSubtotal((prev) => prev - price);
+        const newPrice = subtotal - price;
+        setSubtotal(parseFloat(newPrice.toFixed(2)));
         setCart(newCart);
     };
 
@@ -159,17 +149,60 @@ const Sale = () => {
             .catch((e) => console.log(e));
     };
 
-    const getDiscount = () => {
-        return (subtotal / 100) * discount;
+    const handleDiscount = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const num = e.target.value;
+        setDiscount(parseFloat(parseFloat(num).toFixed(2)));
     };
 
-    const getPayable = () => {};
+    const createInvoice = () => {
+        const products: ProductInt[] = [];
+        cart.forEach((prod) => {
+            products.push({
+                product_name: prod.product_name,
+                product_id: prod.product_id.toString(),
+                qty: prod.qty.toString(),
+                sale_price: prod.sale_price,
+            });
+        });
+
+        const payload = {
+            customer_id: customerUserId.toString(),
+            discount: discount.toString(),
+            payable: payable.toString(),
+            products: products,
+            total: subtotal.toString(),
+            vat: vat.toString(),
+        };
+
+        apiClient
+            .post("/invoice-create", payload, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => {
+                console.log("Successfully made new sale", res);
+                navigate("/dashboard");
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    };
 
     useEffect(() => {
         const tempVat = parseFloat(((subtotal / 100) * 5).toFixed(2));
         setVat(tempVat);
-        // setPayable();
-    }, [subtotal, vat]);
+        setPayable(parseFloat((tempVat + subtotal).toFixed(2)));
+    }, [subtotal]);
+
+    useEffect(() => {
+        let payable = subtotal + vat;
+        if (!Number.isNaN(discount)) {
+            payable = payable - discount;
+            if (discount > payable) setPayable(0);
+            else setPayable(parseFloat(payable.toFixed(2)));
+        } else setDiscount(0);
+    }, [discount]);
 
     useEffect(() => {}, [cart]);
 
@@ -206,23 +239,6 @@ const Sale = () => {
             }
         };
     }, [productList]);
-
-    // useEffect(() => {
-    //     if (cart && cart.length > 0 && cartTable.current) {
-    //         if (cartTableInstance.current)
-    //             destroyDataTable(cartTableInstance.current);
-
-    //         cartTableInstance.current = createCustomDataTable(
-    //             cartTable.current
-    //         );
-    //     }
-
-    //     return () => {
-    //         if (cartTableInstance.current) {
-    //             destroyDataTable(cartTableInstance.current);
-    //         }
-    //     };
-    // }, [cart]);
 
     useEffect(() => {
         loadCustomer();
@@ -345,9 +361,8 @@ const Sale = () => {
                                         <span id="vat">{vat}</span>
                                     </p>
                                     <p className="text-bold text-xs my-1 text-dark">
-                                        {" "}
                                         Discount:{" "}
-                                        <i className="bi bi-currency-dollar"></i>{" "}
+                                        <i className="bi bi-currency-dollar"></i>
                                         <span id="discount">{discount}</span>
                                     </p>
                                     <p className="text-bold text-xs my-2 text-dark">
@@ -361,17 +376,17 @@ const Sale = () => {
                                     </span>
                                     {/* <input onkeydown="return false" value="0" min="0" type="number" step="0.25" onchange="DiscountChange()" className="form-control w-40 " id="discountP"> */}
                                     <input
-                                        value={getDiscount()}
-                                        min="0"
-                                        max={100}
                                         type="number"
-                                        step="0.25"
+                                        value={discount}
                                         className="form-control w-40 "
-                                        id="discountP"
+                                        // id="discountP"
                                         onChange={handleDiscount}
                                     />
                                     <p>
-                                        <button className="btn  my-3 bg-gray-500 w-40 text-white">
+                                        <button
+                                            className="btn  my-3 bg-gray-500 w-40 text-white"
+                                            onClick={createInvoice}
+                                        >
                                             Confirm
                                         </button>
                                         {/* <button onclick="createInvoice()" className="btn  my-3 bg-gradient-primary w-40">Confirm</button> */}
