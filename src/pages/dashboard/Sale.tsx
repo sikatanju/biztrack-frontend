@@ -181,8 +181,8 @@ const Sale = () => {
                 },
             })
             .then((res) => {
-                console.log("Successfully made new sale", res);
-                navigate("/dashboard");
+                // console.log("Successfully made new sale", res);
+                navigate("/invoice");
             })
             .catch((e) => {
                 console.log(e);
@@ -543,7 +543,6 @@ const Sale = () => {
                         id="create-modal"
                         tabIndex={-1}
                         aria-labelledby="exampleModalLabel"
-                        // aria-hidden="true"
                     >
                         <div className="modal-dialog modal-md modal-dialog-centered">
                             <div className="modal-content">

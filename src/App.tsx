@@ -11,6 +11,7 @@ import Category from "./pages/dashboard/Category";
 import Customer from "./pages/dashboard/Customer";
 import Product from "./pages/dashboard/ProductPage";
 import Sale from "./pages/dashboard/Sale";
+import Invoice from "./pages/dashboard/Invoice";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/customer" element={<Customer />} />
                     <Route path="/product" element={<Product />} />
                     <Route path="/sale" element={<Sale />} />
+                    <Route path="/invoice" element={<Invoice />} />
                 </Route>
                 <Route path="/profile" element={<UserProfile />} />
             </Routes>
