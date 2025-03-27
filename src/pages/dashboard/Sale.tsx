@@ -280,7 +280,7 @@ const Sale = () => {
                                 <div className="col-4">
                                     <img
                                         className="w-50"
-                                        src="images/logo.png"
+                                        src="images/BizTrack_Logo.png"
                                     />
                                     <p className="text-bold mx-0 my-1 text-dark">
                                         Invoice{" "}
