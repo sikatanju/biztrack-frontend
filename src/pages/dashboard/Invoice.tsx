@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import apiClient from "../../utils/apiClient";
 import { Customer } from "./Customer";
 import {
@@ -7,7 +7,6 @@ import {
     destroyDataTable,
 } from "../../utils/createDataTable";
 import { Link } from "react-router";
-import Sale from "./Sale";
 
 interface Invoice {
     id: number;

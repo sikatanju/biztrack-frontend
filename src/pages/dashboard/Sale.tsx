@@ -180,8 +180,7 @@ const Sale = () => {
                     "Content-Type": "application/json",
                 },
             })
-            .then((res) => {
-                // console.log("Successfully made new sale", res);
+            .then(() => {
                 navigate("/invoice");
             })
             .catch((e) => {

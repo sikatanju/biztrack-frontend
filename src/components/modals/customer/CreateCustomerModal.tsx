@@ -27,7 +27,7 @@ const CreateCustomerModal = ({ reloadPage }: Props) => {
         if (customer) {
             apiClient
                 .post("/create-customer", customer)
-                .then((res) => {
+                .then(() => {
                     if (closeButton.current) closeButton.current.click();
                     reloadPage();
                 })
