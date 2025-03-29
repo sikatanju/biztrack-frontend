@@ -383,7 +383,7 @@ const Sale = () => {
                                     />
                                     <p>
                                         <button
-                                            className="btn  my-3 bg-gray-500 w-40 text-white"
+                                            className="btn  my-3 bg-gradient-success w-40 text-white"
                                             onClick={createInvoice}
                                         >
                                             Confirm

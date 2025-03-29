@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from "react";
 import apiClient from "../../utils/apiClient";
 import { createDataTable, destroyDataTable } from "../../utils/createDataTable";
