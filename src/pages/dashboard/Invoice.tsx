@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from "react";
 import apiClient from "../../utils/apiClient";
 import { Customer } from "./Customer";
@@ -30,6 +29,11 @@ const Invoice = () => {
 
     const [invoice, setInvoice] = useState<Invoice>();
     const [customer, setCustomer] = useState<Customer>();
+    const [deleteInvoiceId, setDeleteInvoiceId] = useState<number>();
+
+    const reloadPage = () => {
+        window.location.reload();
+    };
 
     const loadInvoice = () => {
         setIsLoading(true);
@@ -139,6 +143,11 @@ const Invoice = () => {
                                                     className="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"
                                                     data-bs-target=".deleteModal"
                                                     data-bs-toggle="modal"
+                                                    onClick={() => {
+                                                        setDeleteInvoiceId(
+                                                            invoice.id
+                                                        );
+                                                    }}
                                                 >
                                                     <i className="fa text-sm  fa-trash-alt"></i>
                                                 </button>
@@ -152,10 +161,8 @@ const Invoice = () => {
                 </div>
             </div>
 
-
-
             <ViewInvoiceModal customer={customer} invoice={invoice} />
-            <DeleteInvoiceModal />
+            <DeleteInvoiceModal id={deleteInvoiceId} reloadPage={reloadPage} />
         </>
     );
 };

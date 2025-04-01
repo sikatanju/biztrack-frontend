@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from "react";
 import { Customer } from "../../../pages/dashboard/Customer";
 import { Invoice } from "../../../pages/dashboard/Invoice";
@@ -35,7 +34,6 @@ const ViewInvoiceModal = ({ customer, invoice }: Props) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [productList, setProductList] = useState<Products[]>([]);
-    const [printInvoice, setPrintInvoice] = useState<boolean>(true);
 
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({ contentRef });

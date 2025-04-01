@@ -1,6 +1,27 @@
-import React from "react";
+import { useEffect } from "react";
+import apiClient from "../../../utils/apiClient";
 
-const DeleteInvoiceModal = () => {
+interface Props {
+    id: number | undefined;
+    reloadPage: () => void;
+}
+
+const DeleteInvoiceModal = ({ id, reloadPage }: Props) => {
+    const handleDelete = () => {
+        const payload = {
+            inv_id: id,
+        };
+        apiClient
+            .post("/invoice-delete", payload)
+            .then((res) => {
+                console.log(res);
+                reloadPage();
+            })
+            .catch((e) => console.log(e));
+    };
+
+    useEffect(() => {}, [id]);
+
     return (
         <div className="modal animated zoomIn deleteModal" id="delete-modal">
             <div className="modal-dialog modal-dialog-centered">
@@ -23,7 +44,9 @@ const DeleteInvoiceModal = () => {
                                 Cancel
                             </button>
                             <button
-                                onClick={() => {}}
+                                onClick={() => {
+                                    handleDelete();
+                                }}
                                 type="button"
                                 id="confirmDelete"
                                 className="btn bg-gradient-danger"
