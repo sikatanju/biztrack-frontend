@@ -12,6 +12,7 @@ import Customer from "./pages/dashboard/Customer";
 import Product from "./pages/dashboard/ProductPage";
 import Sale from "./pages/dashboard/Sale";
 import Invoice from "./pages/dashboard/Invoice";
+import Report from "./pages/dashboard/Report";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/product" element={<Product />} />
                     <Route path="/sale" element={<Sale />} />
                     <Route path="/invoice" element={<Invoice />} />
+                    <Route path="/report" element={<Report />} />
                 </Route>
                 <Route path="/profile" element={<UserProfile />} />
             </Routes>
