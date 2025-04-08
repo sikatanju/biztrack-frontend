@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import apiClient from "../utils/apiClient";
 
@@ -37,7 +36,6 @@ const UserProfile = () => {
                 password: userData.password,
             })
             .then((res) => {
-                console.log(res.data);
                 if (res.data.status === "success") {
                     setUpdateMessage("Profile has been updated successfully");
                     setTimeout(() => {

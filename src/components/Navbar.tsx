@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Link } from "react-router";
 
 interface Props {
@@ -47,11 +46,8 @@ const Navbar = ({ handleSideBar, handleLogout }: Props) => {
                                     Profile
                                 </span>
                             </Link>
-                            <a className="side-bar-item">
-                                <span
-                                    onClick={handleLogout}
-                                    className="side-bar-item-caption"
-                                >
+                            <a className="side-bar-item" onClick={handleLogout}>
+                                <span className="side-bar-item-caption">
                                     Logout
                                 </span>
                             </a>

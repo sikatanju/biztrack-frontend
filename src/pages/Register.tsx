@@ -67,13 +67,10 @@ const Register = () => {
                 mobile: mobile,
             })
             .then((res) => {
-                console.log(res);
                 if (res.data.status === "failed") {
-                    // console.log(res.data.message);
                     setRegistrationComplete(true);
                     handleNavigation();
                 } else if (res.data.status === "success") {
-                    // console.log("success");
                     setRegistrationComplete(true);
                     navigate("/login");
                 }
@@ -83,8 +80,6 @@ const Register = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        console.log(token);
-
         if (token) {
             navigate("/dashboard");
         }

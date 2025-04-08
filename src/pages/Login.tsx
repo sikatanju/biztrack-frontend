@@ -18,7 +18,6 @@ const Login = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        console.log(token);
 
         if (token) {
             navigate("/dashboard");
@@ -38,12 +37,10 @@ const Login = () => {
                 })
                 .then((res) => {
                     if (res.data.status === "success") {
-                        console.log(res.data.token);
                         localStorage.setItem("token", res.data.token);
                         navigate("/dashboard");
                     } else if (res.data.status === "failed") {
                         setError(true);
-                        console.log(res.data);
                         setErrorMessage(
                             "Email or Password is incorrect! Please try again."
                         );
