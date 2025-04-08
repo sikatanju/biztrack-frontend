@@ -117,7 +117,7 @@ const Index = () => {
                                     src="./images/man1.jpg"
                                     alt=""
                                 />
-                                <h5>Sika Tanju</h5>
+                                <h5>John Smith</h5>
                                 <p className="text-muted mb-4">
                                     CEO &amp; Founder
                                 </p>
@@ -127,10 +127,10 @@ const Index = () => {
                             <div className="card px-0 text-center">
                                 <img
                                     className="card-img-top mb-3 w-100"
-                                    src="./images/man1.jpg"
+                                    src="./images/man-3.jpg"
                                     alt=""
                                 />
-                                <h5>Sadaf Rahim</h5>
+                                <h5>Mustafa Junaid</h5>
                                 <p className="text-muted mb-4">
                                     CEO &amp; Founder
                                 </p>
@@ -140,7 +140,7 @@ const Index = () => {
                             <div className="card px-0 text-center">
                                 <img
                                     className="card-img-top mb-3 w-100"
-                                    src="./images/man1.jpg"
+                                    src="./images/man-4.jpg"
                                     alt=""
                                 />
                                 <h5>Abbas Malik</h5>
@@ -153,7 +153,7 @@ const Index = () => {
                             <div className="card px-0 text-center">
                                 <img
                                     className="card-img-top mb-3 w-100"
-                                    src="./images/man1.jpg"
+                                    src="./images/man-5.jpg"
                                     alt=""
                                 />
                                 <h5>Danny Bailey</h5>
