@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import apiClient from "../utils/apiClient";
@@ -29,25 +30,35 @@ const Login = () => {
         setError(false);
 
         if (email && password) {
-            console.log(email + " " + password);
+            // console.log(email + " " + password);
             apiClient
-                .post("/user-login", {
-                    email: email,
+                .post("auth/jwt/create", {
+                    username: email,
                     password: password,
                 })
                 .then((res) => {
-                    if (res.data.status === "success") {
-                        localStorage.setItem("token", res.data.token);
-                        navigate("/dashboard");
-                    } else if (res.data.status === "failed") {
-                        setError(true);
-                        setErrorMessage(
-                            "Email or Password is incorrect! Please try again."
-                        );
+                    if (res.data.access && res.data.refresh) {
+                        const token = "JWT " + res.data.access;
+                        console.log(token);
+
+                        localStorage.setItem("token", token);
+                        localStorage.setItem("refreshToken", res.data.refresh);
                     }
+                    navigate("/dashboard");
+
+                    // if (res.data.status === "success") {
+                    //     localStorage.setItem("token", res.data.token);
+                    //     navigate("/dashboard");
+                    // } else if (res.data.status === "failed") {
+                    //     setError(true);
+                    //     setErrorMessage(
+                    //         "Email or Password is incorrect! Please try again."
+                    //     );
+                    // }
                 })
                 .catch((e) => {
                     console.log(e);
+                    setErrorMessage("Error Message");
                 });
         }
     };
@@ -65,7 +76,7 @@ const Login = () => {
                                     id="email"
                                     placeholder="User Email"
                                     className="form-control"
-                                    type="email"
+                                    type="username"
                                     value={email}
                                     onChange={(e) => handleEmail(e)}
                                 />

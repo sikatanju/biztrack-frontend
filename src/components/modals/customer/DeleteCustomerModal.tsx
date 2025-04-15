@@ -11,9 +11,7 @@ const DeleteCustomerModal = ({ customer_id, realoadPage }: Props) => {
     const handleCustomerDelete = () => {
         if (customer_id !== -1) {
             apiClient
-                .post("/delete-customer", {
-                    id: customer_id,
-                })
+                .delete(`/api/customer/${customer_id}/`)
                 .then(() => {
                     if (closeButton.current) closeButton.current.click();
                     realoadPage();

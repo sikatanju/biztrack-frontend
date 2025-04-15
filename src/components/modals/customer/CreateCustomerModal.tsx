@@ -5,7 +5,7 @@ import apiClient from "../../../utils/apiClient";
 interface NewCustomer {
     name: string;
     email: string;
-    mobile: string;
+    phone: string;
 }
 
 interface Props {
@@ -26,7 +26,7 @@ const CreateCustomerModal = ({ reloadPage }: Props) => {
 
         if (customer) {
             apiClient
-                .post("/create-customer", customer)
+                .post("api/customer/", customer)
                 .then(() => {
                     if (closeButton.current) closeButton.current.click();
                     reloadPage();
@@ -84,8 +84,8 @@ const CreateCustomerModal = ({ reloadPage }: Props) => {
                                             type="text"
                                             className="form-control"
                                             id="customerMobile"
-                                            name="mobile"
-                                            value={customer?.mobile}
+                                            name="phone"
+                                            value={customer?.phone}
                                             onChange={handleInputChange}
                                         />
                                     </div>

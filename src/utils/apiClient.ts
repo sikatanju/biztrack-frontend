@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseURL: "https://inventory-api.teamrabbil.com/api",
+    baseURL: "http://localhost:8000/",
     headers: {
         "Content-Type": "application/json",
     },
@@ -11,7 +11,7 @@ apiClient.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("token");
         if (token) {
-            config.headers["token"] = token;
+            config.headers["Authorization"] = token;
         }
 
         return config;

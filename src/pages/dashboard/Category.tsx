@@ -8,7 +8,7 @@ import DeleteCategoryModal from "../../components/modals/category/DeleteCategory
 
 export interface Category {
     id: number;
-    name: string;
+    title: string;
     created_at: string;
     updated_at: string;
     user_id: string;
@@ -21,18 +21,18 @@ const Category = () => {
     const dataTable = useRef<HTMLTableElement>(null);
     const dataTableInstance = useRef<DataTables.Api | null>(null);
 
-    const [updateCategoryId, setUpdateCategoryId] = useState<number>(-1);
+    const [updateCategory, setUpdateCategory] = useState<Category>();
     const [deleteCategoryId, setDeleteCategoryId] = useState<number>(-1);
 
     const reloadPage = () => {
         setDeleteCategoryId(-1);
-        setUpdateCategoryId(-1);
+        // setUpdateCategoryId();
         loadCategoryData();
     };
 
-    const handleUpdateCategory = (categoryId: number) => {
-        console.log("Updating an existing category -- " + categoryId);
-        setUpdateCategoryId(categoryId);
+    const handleUpdateCategory = (category: Category) => {
+        // console.log("Updating an existing category -- " + categoryId);
+        setUpdateCategory(category);
     };
 
     const handleDeleteCategory = (categoryId: number) => {
@@ -43,7 +43,7 @@ const Category = () => {
     const loadCategoryData = () => {
         setIsLoading(true);
         apiClient
-            .get<Category[]>("/list-category")
+            .get<Category[]>("api/category/")
             .then(({ data: list }) => {
                 // console.log(list);
                 setCategoryList(list);
@@ -130,7 +130,7 @@ const Category = () => {
                                                 </td>
                                                 <td>
                                                     <span className="h6">
-                                                        {category.name}
+                                                        {category.title}
                                                     </span>
                                                 </td>
                                                 <td>
@@ -141,7 +141,7 @@ const Category = () => {
                                                         className="btn editBtn btn-sm btn-outline-success mx-1"
                                                         onClick={() =>
                                                             handleUpdateCategory(
-                                                                category.id
+                                                                category
                                                             )
                                                         }
                                                     >
@@ -174,7 +174,7 @@ const Category = () => {
             <CreateCategoryModal reloadPage={reloadPage} />
             <UpdateCategoryModal
                 reloadPage={reloadPage}
-                categoryId={updateCategoryId}
+                category={updateCategory}
             />
             <DeleteCategoryModal
                 reloadPage={reloadPage}

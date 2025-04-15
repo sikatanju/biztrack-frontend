@@ -26,8 +26,8 @@ const Dashboard = () => {
     });
     useEffect(() => {
         setIsLoading(true);
-        apiClient.get("/summary").then((res) => {
-            // console.log(res.data);
+        apiClient.get("api/summary").then((res) => {
+            console.log(res.data);
             const {
                 product,
                 category,
@@ -38,7 +38,7 @@ const Dashboard = () => {
                 payable,
             } = res.data;
             setData({
-                product,
+                product: product,
                 category,
                 customer,
                 invoice,
@@ -47,7 +47,8 @@ const Dashboard = () => {
                 payable,
             });
             setIsLoading(false);
-        });
+        }).catch(e => console.log(e)
+        );
     }, []);
 
     if (isLoading) {

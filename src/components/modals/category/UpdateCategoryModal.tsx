@@ -1,25 +1,26 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import apiClient from "../../../utils/apiClient";
+import { Category } from "../../../pages/dashboard/Category";
 
 interface Props {
-    categoryId: number;
+    category: Category | undefined;
     reloadPage: () => void;
 }
 
-const UpdateCategoryModal = ({ categoryId, reloadPage }: Props) => {
+const UpdateCategoryModal = ({ category, reloadPage }: Props) => {
     const closeButton = useRef<HTMLButtonElement | null>(null);
-    const [newCategoryName, setNewCategoryName] = useState<string>();
+    const [newCategoryName, setNewCategoryName] = useState<string>("");
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewCategoryName(e.target.value);
     };
 
     const handleUpdateCategory = () => {
-        if (categoryId !== -1) {
+        if (category && category.id !== -1) {
             apiClient
-                .post("/update-category", {
-                    name: newCategoryName,
-                    id: categoryId,
+                .put(`api/category/${category.id}/`, {
+                    id: category,
+                    title: newCategoryName,
                 })
                 .then(() => {
                     if (closeButton.current) closeButton.current.click();
@@ -32,6 +33,10 @@ const UpdateCategoryModal = ({ categoryId, reloadPage }: Props) => {
             console.log("Invalid Category ID");
         }
     };
+
+    useEffect(() => {
+        if (category) setNewCategoryName(category?.title);
+    }, [category]);
 
     return (
         <div
@@ -54,7 +59,7 @@ const UpdateCategoryModal = ({ categoryId, reloadPage }: Props) => {
                                 <div className="row">
                                     <div className="col-12 p-1">
                                         <label className="form-label">
-                                            Category Name *
+                                            Category Name*
                                         </label>
                                         <input
                                             type="text"

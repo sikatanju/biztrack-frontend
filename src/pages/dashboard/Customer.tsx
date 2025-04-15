@@ -9,7 +9,7 @@ export interface Customer {
     id: number;
     name: string;
     email: string;
-    mobile: string;
+    phone: string;
     user_id: number;
     created_at: string;
     updated_at: string;
@@ -37,7 +37,7 @@ const Customer = () => {
     const fetchCustomerData = () => {
         setIsLoading(true);
         apiClient
-            .get<Customer[]>("/list-customer")
+            .get<Customer[]>("api/customer")
             .then(({ data: customers }) => {
                 setCustomerList(customers);
                 setIsLoading(false);
@@ -119,7 +119,7 @@ const Customer = () => {
                                             <td>{index + 1}</td>
                                             <td>{customer.name}</td>
                                             <td>{customer.email}</td>
-                                            <td>{customer.mobile}</td>
+                                            <td>{customer.phone}</td>
                                             <td>
                                                 <button
                                                     data-bs-toggle="modal"

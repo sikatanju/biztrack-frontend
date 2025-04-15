@@ -118,7 +118,7 @@ const Invoice = () => {
                                         <tr>
                                             <td>{idx + 1}</td>
                                             <td>{invoice.customer.name}</td>
-                                            <td>{invoice.customer.mobile}</td>
+                                            <td>{invoice.customer.phone}</td>
                                             <td>{invoice.total}</td>
                                             <td>{invoice.vat}</td>
                                             <td>{invoice.discount}</td>

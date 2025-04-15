@@ -12,6 +12,7 @@ const UpdateCustomerModal = ({ customer, reloadPage }: Props) => {
     const [updatedCustomer, setUpdatedCustomer] = useState<
         Customer | undefined
     >(customer);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (updatedCustomer) {
@@ -23,17 +24,28 @@ const UpdateCustomerModal = ({ customer, reloadPage }: Props) => {
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         apiClient
-            .post("/update-customer", {
+            .put(`api/customer/${updatedCustomer?.id}/`, {
                 id: updatedCustomer?.id,
                 name: updatedCustomer?.name,
                 email: updatedCustomer?.email,
-                mobile: updatedCustomer?.mobile,
+                phone: updatedCustomer?.phone,
             })
             .then(() => {
                 if (closeButton.current) closeButton.current.click();
                 reloadPage();
             })
-            .catch((e) => console.log(e));
+            .catch((e) => {
+                if (e.response.data["email"]) {
+                    // console.log();
+                    setErrorMessage(
+                        "Customer with the given email already exists."
+                    );
+                }   else if (e.response.data["phone"]) {
+                 setErrorMessage(
+                     "Customer with the given phone already exists."
+                 );   
+                }
+            });
     };
 
     useEffect(() => {
@@ -89,8 +101,8 @@ const UpdateCustomerModal = ({ customer, reloadPage }: Props) => {
                                             type="text"
                                             className="form-control"
                                             id="customerMobileUpdate"
-                                            name="mobile"
-                                            value={updatedCustomer?.mobile}
+                                            name="phone"
+                                            value={updatedCustomer?.phone}
                                             onChange={handleInputChange}
                                         />
                                         <input
@@ -102,6 +114,15 @@ const UpdateCustomerModal = ({ customer, reloadPage }: Props) => {
                                 </div>
                             </div>
                         </form>
+                        <div className="container">
+                            <div className="row my-2">
+                                {errorMessage && (
+                                    <p className="text-danger mx-2">
+                                        {errorMessage}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
                     </div>
                     <div className="modal-footer">
                         <button
