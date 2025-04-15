@@ -27,7 +27,7 @@ const Dashboard = () => {
     useEffect(() => {
         setIsLoading(true);
         apiClient.get("api/summary").then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             const {
                 product,
                 category,

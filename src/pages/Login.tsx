@@ -19,9 +19,20 @@ const Login = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-
         if (token) {
-            navigate("/dashboard");
+            apiClient
+                .post("auth/jwt/verify/", {
+                    token: token.substring(3),
+                })
+                .then((res) => {
+                    if (res.status === 200) {
+                        console.log("Okay -- " + res);
+                        navigate("/dashboard");
+                    }
+                }).catch(() => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('refreshToken');
+                });
         }
     }, [navigate]);
 
@@ -39,8 +50,6 @@ const Login = () => {
                 .then((res) => {
                     if (res.data.access && res.data.refresh) {
                         const token = "JWT " + res.data.access;
-                        console.log(token);
-
                         localStorage.setItem("token", token);
                         localStorage.setItem("refreshToken", res.data.refresh);
                     }
@@ -57,7 +66,7 @@ const Login = () => {
                     // }
                 })
                 .catch((e) => {
-                    console.log(e);
+                    // console.log(e);
                     setErrorMessage("Error Message");
                 });
         }
