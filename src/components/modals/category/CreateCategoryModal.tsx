@@ -19,9 +19,7 @@ const CreateCategoryModal = ({ reloadPage }: Props) => {
         if (newCategory) {
             apiClient
                 .post("/create-category", { name: newCategory })
-                .then((res) => {
-                    // console.log(savedNewCategory);
-                    console.log(res);
+                .then(() => {
                     setNewCategory("");
                     if (closeButton.current) closeButton.current.click();
                     reloadPage();

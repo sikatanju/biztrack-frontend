@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from "react";
+import CreateCategoryModal from "../../components/modals/category/CreateCategoryModal";
+import DeleteCategoryModal from "../../components/modals/category/DeleteCategoryModal";
+import UpdateCategoryModal from "../../components/modals/category/UpdateCategoryModal";
 import apiClient from "../../utils/apiClient";
 import { createDataTable, destroyDataTable } from "../../utils/createDataTable";
-import CreateCategoryModal from "../../components/modals/category/CreateCategoryModal";
-import UpdateCategoryModal from "../../components/modals/category/UpdateCategoryModal";
-import DeleteCategoryModal from "../../components/modals/category/DeleteCategoryModal";
 
 export interface Category {
     id: number;
@@ -21,22 +20,19 @@ const Category = () => {
     const dataTable = useRef<HTMLTableElement>(null);
     const dataTableInstance = useRef<DataTables.Api | null>(null);
 
-    const [updateCategoryId, setUpdateCategoryId] = useState<number>(-1);
+    const [updateCategory, setUpdateCategory] = useState<Category>();
     const [deleteCategoryId, setDeleteCategoryId] = useState<number>(-1);
 
     const reloadPage = () => {
         setDeleteCategoryId(-1);
-        setUpdateCategoryId(-1);
         loadCategoryData();
     };
 
-    const handleUpdateCategory = (categoryId: number) => {
-        console.log("Updating an existing category -- " + categoryId);
-        setUpdateCategoryId(categoryId);
+    const handleUpdateCategory = (category: Category) => {
+        setUpdateCategory(category);
     };
 
     const handleDeleteCategory = (categoryId: number) => {
-        console.log("Deleting a category with an id -- " + categoryId);
         setDeleteCategoryId(categoryId);
     };
 
@@ -45,7 +41,6 @@ const Category = () => {
         apiClient
             .get<Category[]>("/list-category")
             .then(({ data: list }) => {
-                // console.log(list);
                 setCategoryList(list);
                 setIsLoading(false);
             })
@@ -141,7 +136,7 @@ const Category = () => {
                                                         className="btn editBtn btn-sm btn-outline-success mx-1"
                                                         onClick={() =>
                                                             handleUpdateCategory(
-                                                                category.id
+                                                                category
                                                             )
                                                         }
                                                     >
@@ -174,7 +169,7 @@ const Category = () => {
             <CreateCategoryModal reloadPage={reloadPage} />
             <UpdateCategoryModal
                 reloadPage={reloadPage}
-                categoryId={updateCategoryId}
+                category={updateCategory}
             />
             <DeleteCategoryModal
                 reloadPage={reloadPage}
@@ -185,156 +180,3 @@ const Category = () => {
 };
 
 export default Category;
-
-{
-    /* <table className="table" id="tableData">
-                                    <thead>
-                                        <tr className="bg-light">
-                                            <th>No</th>
-                                            <th>Category</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableList">
-                                        <tr className="odd">
-                                            <td className="sorting_1">1</td>
-                                            <td>Stick</td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    className="btn editBtn btn-sm btn-outline-success"
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="btn deleteBtn btn-sm btn-outline-danger"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr className="even">
-                                            <td className="sorting_1">2</td>
-                                            <td>Machine</td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    className="btn editBtn btn-sm btn-outline-success"
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="btn deleteBtn btn-sm btn-outline-danger"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr className="odd">
-                                            <td className="sorting_1">3</td>
-                                            <td>Eye</td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    className="btn editBtn btn-sm btn-outline-success"
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="btn deleteBtn btn-sm btn-outline-danger"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr className="even">
-                                            <td className="sorting_1">4</td>
-                                            <td>Out</td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    className="btn editBtn btn-sm btn-outline-success"
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="btn deleteBtn btn-sm btn-outline-danger"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr className="odd">
-                                            <td className="sorting_1">5</td>
-                                            <td>Sight</td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    className="btn editBtn btn-sm btn-outline-success"
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="btn deleteBtn btn-sm btn-outline-danger"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr className="even">
-                                            <td className="sorting_1">6</td>
-                                            <td>Merely</td>
-                                            <td>
-                                                <button
-                                                    type="button"
-                                                    className="btn editBtn btn-sm btn-outline-success"
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="btn deleteBtn btn-sm btn-outline-danger"
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table> */
-}
-{
-    /* <table className="table">
-                                    <thead>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col"></th>
-                                    </thead>
-                                    <tbody>
-                                        {categoryList.map((category, index) => (
-                                            <tr>
-                                                <th scope="row">{index + 1}</th>
-                                                <td>{category.name}</td>
-                                                <td>
-                                                    <button
-                                                        type="button"
-                                                        className="btn editBtn btn-sm btn-outline-success mx-1"
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        className="btn deleteBtn btn-sm btn-outline-danger mx-1"
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table> */
-}

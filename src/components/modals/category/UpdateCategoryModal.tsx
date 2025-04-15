@@ -1,12 +1,13 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import apiClient from "../../../utils/apiClient";
+import { Category } from "../../../pages/dashboard/Category";
 
 interface Props {
-    categoryId: number;
+    category: Category | undefined;
     reloadPage: () => void;
 }
 
-const UpdateCategoryModal = ({ categoryId, reloadPage }: Props) => {
+const UpdateCategoryModal = ({ category, reloadPage }: Props) => {
     const closeButton = useRef<HTMLButtonElement | null>(null);
     const [newCategoryName, setNewCategoryName] = useState<string>();
 
@@ -15,11 +16,11 @@ const UpdateCategoryModal = ({ categoryId, reloadPage }: Props) => {
     };
 
     const handleUpdateCategory = () => {
-        if (categoryId !== -1) {
+        if (category && category.id !== -1) {
             apiClient
                 .post("/update-category", {
                     name: newCategoryName,
-                    id: categoryId,
+                    id: category,
                 })
                 .then(() => {
                     if (closeButton.current) closeButton.current.click();
@@ -32,6 +33,10 @@ const UpdateCategoryModal = ({ categoryId, reloadPage }: Props) => {
             console.log("Invalid Category ID");
         }
     };
+
+    useEffect(() => {
+        setNewCategoryName(category?.name)
+    }, [category])
 
     return (
         <div
