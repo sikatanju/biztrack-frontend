@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-
 import { useEffect, useState } from "react";
 import { Category } from "../../../pages/dashboard/Category";
 import apiClient from "../../../utils/apiClient";
@@ -16,10 +14,14 @@ const UpdateProductModal = ({ product, reloadPage }: Props) => {
         product
     );
 
-    const getInitialCategory = (id: string | undefined) => {
-        if (id)
-            return categoryList?.find((cat) => cat.id === Number.parseInt(id))
-                ?.name;
+    const getInitialCategory = (product?: NewProduct) => {
+        if (product && categoryList) {
+            const title = categoryList.find(
+                (cat) => cat.id == product.category
+            )?.title;
+
+            return title;
+        }
         return "Nan";
     };
 
@@ -32,22 +34,14 @@ const UpdateProductModal = ({ product, reloadPage }: Props) => {
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (newProduct) {
-            const formData = new FormData();
-            formData.append("name", newProduct.name);
-            formData.append("price", newProduct.price);
-            formData.append("unit", newProduct.unit);
-            formData.append("category_id", newProduct.category_id);
-            formData.append("id", newProduct.id);
-            if (newProduct.img) formData.append("img", newProduct.img);
-
-            console.log(formData);
-            apiClient
-                .post("/update-product", formData, {
+        /* {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                })
+                } */
+        if (newProduct) {
+            apiClient
+                .post("/update-product", {})
                 .then(() => {
                     // console.log("Upload Success:", res);
                     reloadPage();
@@ -60,7 +54,7 @@ const UpdateProductModal = ({ product, reloadPage }: Props) => {
 
     useEffect(() => {
         apiClient
-            .get<Category[]>("/list-category")
+            .get<Category[]>("api/categories/")
             .then(({ data: list }) => {
                 setCategoryList(list);
             })
@@ -68,8 +62,6 @@ const UpdateProductModal = ({ product, reloadPage }: Props) => {
     }, []);
 
     useEffect(() => {
-        console.log("In Update MOdal :)");
-
         setNewProduct(product);
     }, [product]);
 
@@ -140,15 +132,17 @@ const UpdateProductModal = ({ product, reloadPage }: Props) => {
                                             onChange={handleInputChange}
                                         >
                                             <option
-                                                value={product?.category_id}
+                                                value={newProduct?.category}
+                                                key={newProduct?.id}
                                             >
-                                                {getInitialCategory(
-                                                    product?.category_id
-                                                )}
+                                                {getInitialCategory(newProduct)}
                                             </option>
                                             {categoryList?.map((category) => (
-                                                <option value={category.id}>
-                                                    {category.name}
+                                                <option
+                                                    value={category.id}
+                                                    key={category.id}
+                                                >
+                                                    {category.title}
                                                 </option>
                                             ))}
                                         </select>

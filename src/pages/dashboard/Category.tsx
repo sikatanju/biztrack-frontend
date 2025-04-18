@@ -43,7 +43,7 @@ const Category = () => {
     const loadCategoryData = () => {
         setIsLoading(true);
         apiClient
-            .get<Category[]>("api/category/")
+            .get<Category[]>("api/categories/")
             .then(({ data: list }) => {
                 // console.log(list);
                 setCategoryList(list);

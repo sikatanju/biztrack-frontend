@@ -37,7 +37,7 @@ const Customer = () => {
     const fetchCustomerData = () => {
         setIsLoading(true);
         apiClient
-            .get<Customer[]>("api/customer")
+            .get<Customer[]>("api/customers/")
             .then(({ data: customers }) => {
                 setCustomerList(customers);
                 setIsLoading(false);

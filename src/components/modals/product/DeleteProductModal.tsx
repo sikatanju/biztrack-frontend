@@ -10,11 +10,8 @@ interface Props {
 const DeleteProductModal = ({ id, reloadPage }: Props) => {
     const clsButton = useRef<HTMLButtonElement>(null);
     const deleteProduct = () => {
-        console.log(id);
         apiClient
-            .post("/delete-product", {
-                id: id?.toString(),
-            })
+            .delete(`api/products/${id}/`)
             .then(() => {
                 if (clsButton.current) clsButton.current.click();
                 reloadPage();

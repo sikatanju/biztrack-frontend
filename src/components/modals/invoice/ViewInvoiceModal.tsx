@@ -146,7 +146,7 @@ const ViewInvoiceModal = ({ customer, invoice }: Props) => {
                                                     sale_price,
                                                 }) => (
                                                     <tr className="text-xs">
-                                                        <td>{product.name}</td>
+                                                        <td>{product.title}</td>
                                                         <td>{qty}</td>
                                                         <td>{sale_price}</td>
                                                     </tr>
@@ -284,7 +284,7 @@ const ViewInvoiceModal = ({ customer, invoice }: Props) => {
                                                     sale_price,
                                                 }) => (
                                                     <tr className="text-xs">
-                                                        <td>{product.name}</td>
+                                                        <td>{product.title}</td>
                                                         <td>{qty}</td>
                                                         <td>{sale_price}</td>
                                                     </tr>

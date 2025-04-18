@@ -8,14 +8,19 @@ import { createDataTable, destroyDataTable } from "../../utils/createDataTable";
 import UpdateProductModal from "../../components/modals/product/UpdateProductModal";
 import DeleteProductModal from "../../components/modals/product/DeleteProductModal";
 
+interface ProductImage {
+    id: number;
+    image: string;
+}
+
 export interface Product {
     id: number;
     user_id: number;
     category_id: number;
-    name: string;
+    title: string;
     price: string;
     unit: string;
-    img_url: string;
+    image: ProductImage;
     created_at: string;
     updated_at: string;
 }
@@ -37,16 +42,15 @@ const ProductPage = () => {
 
     const handleUpdateProduct = (id: number) => {
         const product = productList.find((product) => product.id === id);
-        console.log(product);
+        // console.log(product);
 
         if (product) {
             setUpdateProduct({
                 id: product.id.toString(),
-                name: product.name,
+                name: product.title,
                 price: product.price,
                 unit: product.unit,
-                img: null,
-                category_id: product.category_id.toString(),
+                category: product.category_id,
             });
         }
     };
@@ -58,7 +62,7 @@ const ProductPage = () => {
     const fetchProductList = () => {
         setIsLoading(true);
         apiClient
-            .get<Product[]>("/list-product")
+            .get<Product[]>("api/products/")
             .then(({ data: list }) => {
                 setProductList(list);
                 setIsLoading(false);
@@ -134,15 +138,16 @@ const ProductPage = () => {
                                             className={
                                                 index % 2 === 0 ? "even" : "odd"
                                             }
+                                            key={product.id}
                                         >
                                             <td className="sorting_1">
                                                 <img
-                                                    src={product.img_url}
+                                                    src={`http://localhost:8000/${product?.image?.image}`}
                                                     className="w-15 h-auto"
                                                     alt=""
                                                 />
                                             </td>
-                                            <td>{product.name}</td>
+                                            <td>{product.title}</td>
                                             <td>{product.price}</td>
                                             <td>{product.unit}</td>
                                             <td>

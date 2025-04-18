@@ -436,12 +436,12 @@ const Sale = () => {
                                         {productList.map((prod, idx) => (
                                             <tr className={getClassName(idx)}>
                                                 <td className="sorting_1">
-                                                    {prod.name} (${prod.price})
+                                                    {prod.title} (${prod.price})
                                                 </td>
                                                 <td>
                                                     <a
                                                         data-product-name={
-                                                            prod.name
+                                                            prod.title
                                                         }
                                                         data-product-price={
                                                             prod.price

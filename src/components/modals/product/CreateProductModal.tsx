@@ -8,8 +8,7 @@ export interface NewProduct {
     name: string;
     price: string;
     unit: string;
-    img: File | null;
-    category_id: string;
+    category: number;
 }
 
 interface Props {
@@ -20,7 +19,8 @@ const CreateProductModal = ({ realoadPage }: Props) => {
     const [error, setError] = useState<boolean>(false);
     const [errorMsg, setErrorMsg] = useState<string>("");
 
-    const [newImage, setNewImage] = useState<string>();
+    const [newImage, setNewImage] = useState<File | null>();
+    const [newImageUrl, setNewImageUrl] = useState<string>();
     const [categoryList, setCategoryList] = useState<Category[]>();
 
     const closeBtn = useRef<HTMLButtonElement>(null);
@@ -30,8 +30,7 @@ const CreateProductModal = ({ realoadPage }: Props) => {
         name: "",
         price: "",
         unit: "",
-        img: null,
-        category_id: "",
+        category: -1,
     });
 
     const handleInputChange = (
@@ -45,46 +44,70 @@ const CreateProductModal = ({ realoadPage }: Props) => {
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
             setNewProduct((prev) => ({ ...prev, img: file }));
-            setNewImage(URL.createObjectURL(e.target.files[0]));
+            setNewImage(file);
+            // setNewImageUrl(Object.)
             setError(false);
         }
     };
 
     const handleClose = () => {
-        setNewImage("");
+        setNewImage(null);
     };
 
     const handleCreateProduct = () => {
-        if (!newProduct.img) {
+        if (!newImage || newImage === null) {
             setError(true);
             setErrorMsg("Please select an image.");
         }
-        const formData = new FormData();
-        formData.append("name", newProduct.name);
-        formData.append("price", parseFloat(newProduct.price).toFixed(2));
-        formData.append("unit", newProduct.unit);
-        formData.append("category_id", newProduct.category_id);
-        if (newProduct.img) formData.append("img", newProduct.img);
-        if (closeBtn.current) closeBtn.current.click();
+
+        const payload = {
+            title: newProduct.name,
+            category: newProduct.category,
+            price: parseFloat(newProduct.price).toFixed(2),
+            unit: newProduct.unit,
+        };
 
         apiClient
-            .post("/create-product", formData, {
+            .post("api/products/", payload, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    "Content-Type": "application/json",
                 },
             })
             .then((res) => {
                 console.log("Upload Success:", res);
-                realoadPage();
+                const id = res.data.id;
+                handleImageUpload(id);
             })
             .catch((e) => {
                 console.error("Upload Error:", e);
             });
     };
 
+    const handleImageUpload = (id: number) => {
+        const image_url = `/api/products/${id}/image/`;
+        const formData = new FormData();
+
+        if (newImage) {
+            formData.append("image", newImage);
+        }
+
+        apiClient
+            .post(image_url, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then(() => {
+                realoadPage();
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    };
+
     useEffect(() => {
         apiClient
-            .get<Category[]>("/list-category")
+            .get<Category[]>("api/categories/")
             .then(({ data: list }) => {
                 setCategoryList(list);
             })
@@ -154,13 +177,16 @@ const CreateProductModal = ({ realoadPage }: Props) => {
                                             typeof="text"
                                             className="form-control form-select"
                                             id="productCategory"
-                                            name="category_id"
+                                            name="category"
                                             onChange={handleInputChange}
                                         >
                                             <option>Select a category</option>
                                             {categoryList?.map((category) => (
-                                                <option value={category.id}>
-                                                    {category.name}
+                                                <option
+                                                    value={category.id}
+                                                    key={category.id}
+                                                >
+                                                    {category.title}
                                                 </option>
                                             ))}
                                         </select>
@@ -170,7 +196,7 @@ const CreateProductModal = ({ realoadPage }: Props) => {
                                             <img
                                                 className="w-15"
                                                 id="newImg"
-                                                src={newImage}
+                                                // src={newImage}
                                             />
                                         )}
                                         <br />

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import apiClient from "../utils/apiClient";
@@ -29,9 +28,10 @@ const Login = () => {
                         console.log("Okay -- " + res);
                         navigate("/dashboard");
                     }
-                }).catch(() => {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('refreshToken');
+                })
+                .catch(() => {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("refreshToken");
                 });
         }
     }, [navigate]);
@@ -41,7 +41,6 @@ const Login = () => {
         setError(false);
 
         if (email && password) {
-            // console.log(email + " " + password);
             apiClient
                 .post("auth/jwt/create", {
                     username: email,
@@ -54,19 +53,8 @@ const Login = () => {
                         localStorage.setItem("refreshToken", res.data.refresh);
                     }
                     navigate("/dashboard");
-
-                    // if (res.data.status === "success") {
-                    //     localStorage.setItem("token", res.data.token);
-                    //     navigate("/dashboard");
-                    // } else if (res.data.status === "failed") {
-                    //     setError(true);
-                    //     setErrorMessage(
-                    //         "Email or Password is incorrect! Please try again."
-                    //     );
-                    // }
                 })
-                .catch((e) => {
-                    // console.log(e);
+                .catch(() => {
                     setErrorMessage("Error Message");
                 });
         }
