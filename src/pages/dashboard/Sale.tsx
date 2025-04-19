@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
 import { Customer } from "./Customer";
 import apiClient from "../../utils/apiClient";
@@ -16,10 +17,9 @@ interface Cart {
     subTotal: number;
 }
 interface ProductInt {
-    product_name: string;
-    product_id: string;
-    qty: string;
-    sale_price: string;
+    product: number;
+    quantity: number;
+    sale_price: number;
 }
 
 const Sale = () => {
@@ -129,7 +129,7 @@ const Sale = () => {
     const loadCustomer = () => {
         setIsLoading(true);
         apiClient
-            .get("/list-customer")
+            .get("api/customers/")
             .then(({ data: list }) => {
                 setCustomerList(list);
                 setIsLoading(false);
@@ -140,7 +140,7 @@ const Sale = () => {
     const loadProduct = () => {
         setIsLoading(true);
         apiClient
-            .get("/list-product")
+            .get("api/products/")
             .then(({ data: list }) => {
                 setProductList(list);
                 setIsLoading(false);
@@ -157,24 +157,36 @@ const Sale = () => {
         const products: ProductInt[] = [];
         cart.forEach((prod) => {
             products.push({
-                product_name: prod.product_name,
-                product_id: prod.product_id.toString(),
-                qty: prod.qty.toString(),
-                sale_price: prod.sale_price,
+                product: prod.product_id,
+                quantity: prod.qty,
+                sale_price: parseFloat(prod.sale_price),
             });
         });
 
-        const payload = {
-            customer_id: customerUserId.toString(),
-            discount: discount.toString(),
-            payable: payable.toString(),
-            products: products,
-            total: subtotal.toString(),
-            vat: vat.toString(),
-        };
+        console.log(products);
 
+        // const payload = {
+        //     customer_id: customerUserId.toString(),
+        //     discount: discount.toString(),
+        //     payable: payable.toString(),
+        //     products: products,
+        //     total: subtotal.toString(),
+        //     vat: vat.toString(),
+        // };
+
+        const newPayload = {
+            customer: parseInt(customerUserId),
+            vat: discount,
+            discount: discount,
+            payable: payable,
+            total: subtotal,
+            items: products,
+        };
+        console.log(newPayload);
+
+        // return;
         apiClient
-            .post("/invoice-create", payload, {
+            .post("api/invoices/", newPayload, {
                 headers: {
                     "Content-Type": "application/json",
                 },

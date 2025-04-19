@@ -38,7 +38,7 @@ const Invoice = () => {
     const loadInvoice = () => {
         setIsLoading(true);
         apiClient
-            .get("/invoice-select")
+            .get("api/invoices/")
             .then(({ data: list }) => {
                 setInvoiceList(list);
                 setIsLoading(false);
@@ -115,7 +115,7 @@ const Invoice = () => {
                                 </thead>
                                 <tbody id="invoiceList">
                                     {invoiceList.map((invoice, idx) => (
-                                        <tr>
+                                        <tr key={idx}>
                                             <td>{idx + 1}</td>
                                             <td>{invoice.customer.name}</td>
                                             <td>{invoice.customer.phone}</td>
@@ -161,7 +161,7 @@ const Invoice = () => {
                 </div>
             </div>
 
-            <ViewInvoiceModal customer={customer} invoice={invoice} />
+             <ViewInvoiceModal customer={customer} invoice={invoice} />
             <DeleteInvoiceModal id={deleteInvoiceId} reloadPage={reloadPage} />
         </>
     );

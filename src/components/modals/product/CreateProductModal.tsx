@@ -46,18 +46,32 @@ const CreateProductModal = ({ realoadPage }: Props) => {
             setNewProduct((prev) => ({ ...prev, img: file }));
             setNewImage(file);
             // setNewImageUrl(Object.)
+            setNewImageUrl(URL.createObjectURL(file));
             setError(false);
         }
     };
 
     const handleClose = () => {
         setNewImage(null);
+        setNewImageUrl("");
+        setError(false);
+        setErrorMsg("");
     };
 
     const handleCreateProduct = () => {
         if (!newImage || newImage === null) {
             setError(true);
             setErrorMsg("Please select an image.");
+            return;
+        } else if (
+            newProduct.name === "" ||
+            newProduct.price === "" ||
+            newProduct.category === -1 ||
+            newProduct.unit === ""
+        ) {
+            setError(true);
+            setErrorMsg("Please input all the required fields");
+            return;
         }
 
         const payload = {
@@ -196,7 +210,7 @@ const CreateProductModal = ({ realoadPage }: Props) => {
                                             <img
                                                 className="w-15"
                                                 id="newImg"
-                                                // src={newImage}
+                                                src={newImageUrl}
                                             />
                                         )}
                                         <br />

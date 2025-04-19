@@ -8,13 +8,10 @@ interface Props {
 
 const DeleteInvoiceModal = ({ id, reloadPage }: Props) => {
     const handleDelete = () => {
-        const payload = {
-            inv_id: id,
-        };
         apiClient
-            .post("/invoice-delete", payload)
-            .then((res) => {
-                console.log(res);
+            .delete(`api/invoices/${id}/`)
+            .then(() => {
+                // console.log(res);
                 reloadPage();
             })
             .catch((e) => console.log(e));

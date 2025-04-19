@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Customer } from "../../../pages/dashboard/Customer";
 import { Invoice } from "../../../pages/dashboard/Invoice";
 import apiClient from "../../../utils/apiClient";
-import { Product } from "../../../pages/dashboard/ProductPage";
 import { useReactToPrint } from "react-to-print";
 
 interface Props {
@@ -10,13 +9,16 @@ interface Props {
     invoice: Invoice | undefined;
 }
 
-interface Products {
+interface SimpleProduct {
     id: number;
-    invoice_id: number;
-    product_id: number;
-    qty: string;
-    sale_price: string;
-    product: Product;
+    title: string;
+    category: 5;
+}
+
+interface ProductList {
+    product: SimpleProduct;
+    quantity: number;
+    sale_price: number;
 }
 
 const ViewInvoiceModal = ({ customer, invoice }: Props) => {
@@ -33,24 +35,23 @@ const ViewInvoiceModal = ({ customer, invoice }: Props) => {
     };
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [productList, setProductList] = useState<Products[]>([]);
+    const [productList, setProductList] = useState<ProductList[]>([]);
 
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({ contentRef });
 
     useEffect(() => {
-        const payload = {
-            inv_id: invoice?.id,
-            cus_id: customer?.id,
-        };
-        setIsLoading(true);
-        apiClient
-            .post("/invoice-details", payload)
-            .then((res) => {
-                setProductList(res.data.product);
-                setIsLoading(false);
-            })
-            .catch((e) => console.log(e));
+        if (invoice)    {
+            setIsLoading(true);
+            if (invoice?.id)
+                apiClient
+                    .get(`api/invoices/${invoice?.id}/`)
+                    .then((res) => {                        
+                        setProductList(res.data.items);
+                        setIsLoading(false);
+                    })
+                    .catch((e) => console.log(e));
+        }
     }, [invoice]);
 
     if (isLoading) {
@@ -139,19 +140,13 @@ const ViewInvoiceModal = ({ customer, invoice }: Props) => {
                                             className="w-100"
                                             id="invoiceList"
                                         >
-                                            {productList.map(
-                                                ({
-                                                    product,
-                                                    qty,
-                                                    sale_price,
-                                                }) => (
-                                                    <tr className="text-xs">
-                                                        <td>{product.title}</td>
-                                                        <td>{qty}</td>
-                                                        <td>{sale_price}</td>
-                                                    </tr>
-                                                )
-                                            )}
+                                            {productList.map((prod) => (
+                                                <tr className="text-xs" key={prod.product.id}>
+                                                    <td>{prod.product.title}</td>
+                                                    <td>{prod.quantity}</td>
+                                                    <td>{prod.sale_price}</td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>
@@ -277,19 +272,13 @@ const ViewInvoiceModal = ({ customer, invoice }: Props) => {
                                             className="w-100"
                                             id="invoiceList"
                                         >
-                                            {productList.map(
-                                                ({
-                                                    product,
-                                                    qty,
-                                                    sale_price,
-                                                }) => (
-                                                    <tr className="text-xs">
-                                                        <td>{product.title}</td>
-                                                        <td>{qty}</td>
-                                                        <td>{sale_price}</td>
-                                                    </tr>
-                                                )
-                                            )}
+                                            {productList.map((prod) => (
+                                                <tr className="text-xs" key={prod.product.id}>
+                                                    <td>{prod.product.title}</td>
+                                                    <td>{prod.quantity}</td>
+                                                    <td>{prod.sale_price}</td>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                     </table>
                                 </div>
