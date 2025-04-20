@@ -42,8 +42,6 @@ const ProductPage = () => {
 
     const handleUpdateProduct = (id: number) => {
         const product = productList.find((product) => product.id === id);
-        // console.log(product);
-
         if (product) {
             setUpdateProduct({
                 id: product.id.toString(),
@@ -86,8 +84,8 @@ const ProductPage = () => {
         }
 
         return () => {
-            destroyDataTable(productTableInstance.current);
-            productTableInstance.current = null;
+            if (productTableInstance.current)
+                destroyDataTable(productTableInstance.current);
         };
     }, [productList]);
 
@@ -122,66 +120,74 @@ const ProductPage = () => {
                                 </div>
                             </div>
                             <hr className="bg-dark " />
-                            <table className="table" id="tableData">
-                                <thead>
-                                    <tr className="bg-light">
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Unit</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableList">
-                                    {productList.map((product, index) => (
-                                        <tr
-                                            className={
-                                                index % 2 === 0 ? "even" : "odd"
-                                            }
-                                            key={product.id}
-                                        >
-                                            <td className="sorting_1">
-                                                <img
-                                                    src={`http://localhost:8000/${product?.image?.image}`}
-                                                    className="w-15 h-auto"
-                                                    alt=""
-                                                />
-                                            </td>
-                                            <td>{product.title}</td>
-                                            <td>{product.price}</td>
-                                            <td>{product.unit}</td>
-                                            <td>
-                                                <button
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#update-modal"
-                                                    type="button"
-                                                    className="btn editBtn btn-sm btn-outline-success mx-1"
-                                                    onClick={() =>
-                                                        handleUpdateProduct(
-                                                            product.id
-                                                        )
-                                                    }
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#delete-modal"
-                                                    type="button"
-                                                    className="btn deleteBtn btn-sm btn-outline-danger mx-1"
-                                                    onClick={() => {
-                                                        handleDeleteId(
-                                                            product.id
-                                                        );
-                                                    }}
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
+                            <div className="table-responsive">
+                                <table
+                                    className="display stripe cell-border hover"
+                                    id="tableData"
+                                    ref={productTableRef}
+                                >
+                                    <thead>
+                                        <tr className="bg-light">
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Unit</th>
+                                            <th>Action</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody id="tableList">
+                                        {productList.map((product, index) => (
+                                            <tr
+                                                className={
+                                                    index % 2 === 0
+                                                        ? "even"
+                                                        : "odd"
+                                                }
+                                                key={product.id}
+                                            >
+                                                <td className="sorting_1">
+                                                    <img
+                                                        src={`http://localhost:8000/${product?.image?.image}`}
+                                                        className="w-15 h-auto"
+                                                        alt=""
+                                                    />
+                                                </td>
+                                                <td>{product.title}</td>
+                                                <td>{product.price}</td>
+                                                <td>{product.unit}</td>
+                                                <td>
+                                                    <button
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#update-modal"
+                                                        type="button"
+                                                        className="btn editBtn btn-sm btn-outline-success mx-1"
+                                                        onClick={() =>
+                                                            handleUpdateProduct(
+                                                                product.id
+                                                            )
+                                                        }
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#delete-modal"
+                                                        type="button"
+                                                        className="btn deleteBtn btn-sm btn-outline-danger mx-1"
+                                                        onClick={() => {
+                                                            handleDeleteId(
+                                                                product.id
+                                                            );
+                                                        }}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

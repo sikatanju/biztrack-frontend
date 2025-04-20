@@ -104,7 +104,7 @@ const Category = () => {
                             <hr className="bg-secondary" />
                             <div className="table-responsive">
                                 <table
-                                    className="table"
+                                    className="display compact hover"
                                     id="tableData"
                                     ref={dataTable}
                                 >

@@ -19,8 +19,8 @@ const Customer = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [customerList, setCustomerList] = useState<Customer[]>([]);
 
-    const customerDataTableRef = useRef<HTMLTableElement>(null);
-    const customerDataTableInstance = useRef<DataTables.Api | null>(null);
+    const customerTable = useRef<HTMLTableElement>(null);
+    const customerTableInstance = useRef<DataTables.Api | null>(null);
 
     const [updateCustomer, setUpdateCustomer] = useState<Customer>();
     const [deleteCustomerId, setDeleteCustomerId] = useState<number>(-1);
@@ -54,17 +54,18 @@ const Customer = () => {
     }, []);
 
     useEffect(() => {
-        if (customerList && customerDataTableRef.current) {
-            if (customerDataTableRef.current) {
-                destroyDataTable(customerDataTableInstance.current);
+        if (customerList && customerList.length > 0 &&  customerTable.current) {
+            if (customerTable.current) {
+                destroyDataTable(customerTableInstance.current);
             }
-            customerDataTableInstance.current = createDataTable(
-                customerDataTableRef.current
+            customerTableInstance.current = createDataTable(
+                customerTable.current
             );
         }
 
         return () => {
-            destroyDataTable(customerDataTableInstance.current);
+            if (customerTableInstance.current)
+                destroyDataTable(customerTableInstance.current);
         };
     }, [customerList]);
 
@@ -99,59 +100,69 @@ const Customer = () => {
                                 </div>
                             </div>
                             <hr className="bg-dark " />
-                            <table className="table" id="tableData">
-                                <thead>
-                                    <tr className="bg-light">
-                                        <th>No</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Mobile</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableList">
-                                    {customerList.map((customer, index) => (
-                                        <tr
-                                            className={
-                                                index % 2 === 0 ? "even" : "odd"
-                                            }
-                                        >
-                                            <td>{index + 1}</td>
-                                            <td>{customer.name}</td>
-                                            <td>{customer.email}</td>
-                                            <td>{customer.phone}</td>
-                                            <td>
-                                                <button
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#update-modal"
-                                                    type="button"
-                                                    className="btn editBtn btn-sm btn-outline-success mx-1"
-                                                    onClick={() =>
-                                                        handleUpdateCustomer(
-                                                            customer.id
-                                                        )
-                                                    }
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#delete-modal"
-                                                    type="button"
-                                                    className="btn deleteBtn btn-sm btn-outline-danger mx-1"
-                                                    onClick={() =>
-                                                        handleDeleteCustomerId(
-                                                            customer.id
-                                                        )
-                                                    }
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
+                            <div className="table-responsive">
+                                <table
+                                    className="display hover"
+                                    id="tableData"
+                                    ref={customerTable}
+                                >
+                                    <thead>
+                                        <tr className="bg-light">
+                                            <th>No</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Action</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody id="tableList">
+                                        {customerList.map((customer, index) => (
+                                            <tr
+                                                className={
+                                                    index % 2 === 0
+                                                        ? "even"
+                                                        : "odd"
+                                                }
+                                            >
+                                                <td className="sorting_1">
+                                                    {index + 1}
+                                                </td>
+                                                <td>{customer.name}</td>
+                                                <td>{customer.email}</td>
+                                                <td>{customer.phone}</td>
+                                                <td>
+                                                    <button
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#update-modal"
+                                                        type="button"
+                                                        className="btn editBtn btn-sm btn-outline-success mx-1"
+                                                        onClick={() =>
+                                                            handleUpdateCustomer(
+                                                                customer.id
+                                                            )
+                                                        }
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#delete-modal"
+                                                        type="button"
+                                                        className="btn deleteBtn btn-sm btn-outline-danger mx-1"
+                                                        onClick={() =>
+                                                            handleDeleteCustomerId(
+                                                                customer.id
+                                                            )
+                                                        }
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
