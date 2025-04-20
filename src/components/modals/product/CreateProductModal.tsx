@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from "react";
-import { Category } from "../../../pages/dashboard/Category";
+import { Category } from "../../../pages/dashboard/Category.1";
 import apiClient from "../../../utils/apiClient";
 
 export interface NewProduct {

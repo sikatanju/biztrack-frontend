@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Category } from "../../../pages/dashboard/Category";
+import { Category } from "../../../pages/dashboard/Category.1";
 import apiClient from "../../../utils/apiClient";
 import { NewProduct } from "./CreateProductModal";
 

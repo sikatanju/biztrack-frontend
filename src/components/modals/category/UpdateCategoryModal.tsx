@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import apiClient from "../../../utils/apiClient";
-import { Category } from "../../../pages/dashboard/Category";
+import { CategoryInf } from "../../../utils/types";
+
 
 interface Props {
-    category: Category | undefined;
+    category: CategoryInf | undefined;
     reloadPage: () => void;
 }
 
