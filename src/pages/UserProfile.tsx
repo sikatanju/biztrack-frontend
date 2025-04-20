@@ -2,20 +2,22 @@ import { useEffect, useState } from "react";
 import apiClient from "../utils/apiClient";
 
 interface UserData {
+    id: number;
+    username: string;
+    email: string;
     firstName: string;
     lastName: string;
-    email: string;
     mobile: string;
-    password: string;
 }
 
 const UserProfile = () => {
     const [userData, setUserData] = useState<UserData>({
+        id: -1,
+        username: "",
         firstName: "",
         lastName: "",
         email: "",
         mobile: "",
-        password: "",
     });
 
     const handleUserDataChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,12 +30,13 @@ const UserProfile = () => {
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         apiClient
-            .post("/user-update", {
+            .put("auth/users/me/", {
+                id: userData.id,
+                username: userData.username,
+                email: userData.email,
                 firstName: userData.firstName,
                 lastName: userData.lastName,
-                email: userData.email,
                 mobile: userData.mobile,
-                password: userData.password,
             })
             .then((res) => {
                 if (res.data.status === "success") {
@@ -50,17 +53,24 @@ const UserProfile = () => {
 
     useEffect(() => {
         apiClient
-            .get("/user-profile")
+            .get("auth/users/me")
             .then((res) => {
-                if (res.data.status === "success") {
-                    const { firstName, lastName, email, mobile, password } =
-                        res.data.data;
-                    setUserData({
-                        firstName,
-                        lastName,
+                if (res.status  === 200)    {
+                    const {
+                        id,
+                        username,
+                        first_name,
+                        last_name,
                         email,
                         mobile,
-                        password,
+                    } = res.data;
+                    setUserData({
+                        id: id,
+                        username: username,
+                        email: email,
+                        firstName: first_name,
+                        lastName: last_name,
+                        mobile: mobile,
                     });
                 }
             })
@@ -81,6 +91,20 @@ const UserProfile = () => {
                                 <div className="container-fluid m-0 p-0">
                                     <form onSubmit={handleFormSubmit}>
                                         <div className="row m-0 p-0">
+                                            <div className="col-md-4 p-2">
+                                                <label>Username</label>
+                                                <input
+                                                    readOnly
+                                                    id="email"
+                                                    placeholder="User Email"
+                                                    className="form-control"
+                                                    type="email"
+                                                    value={userData.username}
+                                                    onChange={
+                                                        handleUserDataChange
+                                                    }
+                                                />
+                                            </div>
                                             <div className="col-md-4 p-2">
                                                 <label>Email Address</label>
                                                 <input
@@ -137,20 +161,6 @@ const UserProfile = () => {
                                                     }
                                                 />
                                             </div>
-                                            <div className="col-md-4 p-2">
-                                                <label>Password</label>
-                                                <input
-                                                    id="password"
-                                                    placeholder="New Password"
-                                                    className="form-control"
-                                                    type="password"
-                                                    name="password"
-                                                    value={userData.password}
-                                                    onChange={
-                                                        handleUserDataChange
-                                                    }
-                                                />
-                                            </div>
                                         </div>
                                         <div className="row m-0 p-0">
                                             <div className="col-md-4 p-2">
@@ -170,59 +180,6 @@ const UserProfile = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="card animated fadeIn w-100 p-3">
-                            <div className="card-body">
-                                <h4>Change Password</h4>
-                                <hr />
-                                <div className="container-fluid m-0 p-0">
-                                    <div className="row m-0 p-0">
-                                        <div className="col-md-4 p-2">
-                                            <label>Old Password</label>
-                                            <input
-                                                id="password"
-                                                placeholder="New Password"
-                                                className="form-control"
-                                                type="password"
-                                                value={password}
-                                                onChange={handlePassword}
-                                            />
-                                        </div>
-                                        <div className="col-md-4 p-2">
-                                            <label>New Password</label>
-                                            <input
-                                                id="password"
-                                                placeholder="New Password"
-                                                className="form-control"
-                                                type="password"
-                                                value={password}
-                                                onChange={handlePassword}
-                                            />
-                                        </div>
-                                        <div className="col-md-4 p-2">
-                                            <label>Repeat New Password</label>
-                                            <input
-                                                id="password"
-                                                placeholder="New Password"
-                                                className="form-control"
-                                                type="password"
-                                                value={password}
-                                                onChange={handlePassword}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="row m-0 p-0">
-                                        <div className="col-md-4 p-2">
-                                            <button
-                                                disabled
-                                                className="btn mt-3 w-100  bg-primary text-white"
-                                            >
-                                                Update
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </div>
