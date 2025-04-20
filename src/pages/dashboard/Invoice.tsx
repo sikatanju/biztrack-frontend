@@ -7,17 +7,8 @@ import {
 import { Link } from "react-router";
 import ViewInvoiceModal from "../../components/modals/invoice/ViewInvoiceModal";
 import DeleteInvoiceModal from "../../components/modals/invoice/DeleteInvoiceModal";
-import { CustomerInf } from "../../utils/types";
+import { CustomerInf, InvoiceInf } from "../../utils/types";
 
-export interface Invoice {
-    id: number;
-    total: string;
-    discount: string;
-    vat: string;
-    payable: string;
-    user_id: number;
-    customer: CustomerInf;
-}
 
 const Invoice = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -25,9 +16,9 @@ const Invoice = () => {
     const invoiceTable = useRef<HTMLTableElement>(null);
     const invoiceTableInstance = useRef<DataTables.Api | null>(null);
 
-    const [invoiceList, setInvoiceList] = useState<Invoice[]>([]);
+    const [invoiceList, setInvoiceList] = useState<InvoiceInf[]>([]);
 
-    const [invoice, setInvoice] = useState<Invoice>();
+    const [invoice, setInvoice] = useState<InvoiceInf>();
     const [customer, setCustomer] = useState<CustomerInf>();
     const [deleteInvoiceId, setDeleteInvoiceId] = useState<number>();
 

@@ -11,7 +11,6 @@ const DeleteInvoiceModal = ({ id, reloadPage }: Props) => {
         apiClient
             .delete(`api/invoices/${id}/`)
             .then(() => {
-                // console.log(res);
                 reloadPage();
             })
             .catch((e) => console.log(e));

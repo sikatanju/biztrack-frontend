@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from "react";
 import CreateProductModal, {
     NewProduct,
@@ -7,27 +6,12 @@ import apiClient from "../../utils/apiClient";
 import { createDataTable, destroyDataTable } from "../../utils/createDataTable";
 import UpdateProductModal from "../../components/modals/product/UpdateProductModal";
 import DeleteProductModal from "../../components/modals/product/DeleteProductModal";
+import { ProductInf } from "../../utils/types";
 
-interface ProductImage {
-    id: number;
-    image: string;
-}
-
-export interface Product {
-    id: number;
-    user_id: number;
-    category_id: number;
-    title: string;
-    price: string;
-    unit: string;
-    image: ProductImage;
-    created_at: string;
-    updated_at: string;
-}
 
 const ProductPage = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [productList, setProductList] = useState<Product[]>([]);
+    const [productList, setProductList] = useState<ProductInf[]>([]);
     const [updateProduct, setUpdateProduct] = useState<NewProduct>();
     const [deleteProductId, setDeleteProductId] = useState<
         number | undefined
@@ -60,7 +44,7 @@ const ProductPage = () => {
     const fetchProductList = () => {
         setIsLoading(true);
         apiClient
-            .get<Product[]>("api/products/")
+            .get<ProductInf[]>("api/products/")
             .then(({ data: list }) => {
                 setProductList(list);
                 setIsLoading(false);

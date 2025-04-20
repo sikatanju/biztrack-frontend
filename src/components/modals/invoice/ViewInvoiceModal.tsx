@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Invoice } from "../../../pages/dashboard/Invoice";
 import apiClient from "../../../utils/apiClient";
 import { useReactToPrint } from "react-to-print";
-import { CustomerInf } from "../../../utils/types";
+import { CustomerInf, InvoiceInf } from "../../../utils/types";
 
 interface Props {
     customer: CustomerInf | undefined;
-    invoice: Invoice | undefined;
+    invoice: InvoiceInf | undefined;
 }
 
 interface SimpleProduct {

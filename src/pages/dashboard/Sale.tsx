@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
 import apiClient from "../../utils/apiClient";
 import {
     createCustomDataTable,
     destroyDataTable,
 } from "../../utils/createDataTable";
-import { Product } from "./ProductPage";
 import { useNavigate } from "react-router";
-import { CustomerInf } from "../../utils/types";
+import { CustomerInf, ProductInf } from "../../utils/types";
 
 interface Cart {
     product_id: number;
@@ -30,7 +28,7 @@ const Sale = () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [customerList, setCustomerList] = useState<CustomerInf[]>([]);
-    const [productList, setProductList] = useState<Product[]>([]);
+    const [productList, setProductList] = useState<ProductInf[]>([]);
 
     const customerTable = useRef<HTMLTableElement>(null);
     const customerTableInstance = useRef<DataTables.Api | null>(null);
@@ -163,17 +161,6 @@ const Sale = () => {
             });
         });
 
-        console.log(products);
-
-        // const payload = {
-        //     customer_id: customerUserId.toString(),
-        //     discount: discount.toString(),
-        //     payable: payable.toString(),
-        //     products: products,
-        //     total: subtotal.toString(),
-        //     vat: vat.toString(),
-        // };
-
         const newPayload = {
             customer: parseInt(customerUserId),
             vat: discount,
@@ -184,7 +171,6 @@ const Sale = () => {
         };
         console.log(newPayload);
 
-        // return;
         apiClient
             .post("api/invoices/", newPayload, {
                 headers: {
@@ -308,7 +294,6 @@ const Sale = () => {
                                         className="table w-100"
                                         id="invoiceTable"
                                         aria-describedby="cartTable_info"
-                                        // ref={cartTable}
                                     >
                                         <thead className="w-100">
                                             <tr className="text-xs">
@@ -384,12 +369,10 @@ const Sale = () => {
                                     <span className="text-xxs">
                                         Discount(%):
                                     </span>
-                                    {/* <input onkeydown="return false" value="0" min="0" type="number" step="0.25" onchange="DiscountChange()" className="form-control w-40 " id="discountP"> */}
                                     <input
                                         type="number"
                                         value={discount}
                                         className="form-control w-40 "
-                                        // id="discountP"
                                         onChange={handleDiscount}
                                     />
                                     <p>
@@ -399,7 +382,6 @@ const Sale = () => {
                                         >
                                             Confirm
                                         </button>
-                                        {/* <button onclick="createInvoice()" className="btn  my-3 bg-gradient-primary w-40">Confirm</button> */}
                                     </p>
                                 </div>
                                 <div className="col-12 p-2"></div>
