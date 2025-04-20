@@ -92,13 +92,15 @@ const UserProfile = () => {
                                     <form onSubmit={handleFormSubmit}>
                                         <div className="row m-0 p-0">
                                             <div className="col-md-4 p-2">
-                                                <label>Username</label>
+                                                <label htmlFor="username">
+                                                    Username
+                                                </label>
                                                 <input
                                                     readOnly
-                                                    id="email"
+                                                    id="username"
                                                     placeholder="User Email"
                                                     className="form-control"
-                                                    type="email"
+                                                    type="text"
                                                     value={userData.username}
                                                     onChange={
                                                         handleUserDataChange
@@ -106,7 +108,9 @@ const UserProfile = () => {
                                                 />
                                             </div>
                                             <div className="col-md-4 p-2">
-                                                <label>Email Address</label>
+                                                <label htmlFor="email">
+                                                    Email Address
+                                                </label>
                                                 <input
                                                     readOnly
                                                     id="email"
@@ -120,7 +124,9 @@ const UserProfile = () => {
                                                 />
                                             </div>
                                             <div className="col-md-4 p-2">
-                                                <label>First Name</label>
+                                                <label htmlFor="firstName">
+                                                    First Name
+                                                </label>
                                                 <input
                                                     id="firstName"
                                                     placeholder="First Name"
@@ -134,7 +140,9 @@ const UserProfile = () => {
                                                 />
                                             </div>
                                             <div className="col-md-4 p-2">
-                                                <label>Last Name</label>
+                                                <label htmlFor="lastName">
+                                                    Last Name
+                                                </label>
                                                 <input
                                                     id="lastName"
                                                     placeholder="Last Name"
@@ -148,7 +156,9 @@ const UserProfile = () => {
                                                 />
                                             </div>
                                             <div className="col-md-4 p-2">
-                                                <label>Mobile Number</label>
+                                                <label htmlFor="mobile">
+                                                    Mobile Number
+                                                </label>
                                                 <input
                                                     id="mobile"
                                                     placeholder="Mobile"
