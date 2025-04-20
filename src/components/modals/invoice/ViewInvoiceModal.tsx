@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Customer } from "../../../pages/dashboard/Customer";
 import { Invoice } from "../../../pages/dashboard/Invoice";
 import apiClient from "../../../utils/apiClient";
 import { useReactToPrint } from "react-to-print";
+import { CustomerInf } from "../../../utils/types";
 
 interface Props {
-    customer: Customer | undefined;
+    customer: CustomerInf | undefined;
     invoice: Invoice | undefined;
 }
 

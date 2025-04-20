@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Category } from "../../../pages/dashboard/Category.1";
 import apiClient from "../../../utils/apiClient";
 import { NewProduct } from "./CreateProductModal";
+import { CategoryInf } from "../../../utils/types";
 
 interface Props {
     product: NewProduct | undefined;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const UpdateProductModal = ({ product, reloadPage }: Props) => {
-    const [categoryList, setCategoryList] = useState<Category[]>();
+    const [categoryList, setCategoryList] = useState<CategoryInf[]>();
     const [newProduct, setNewProduct] = useState<NewProduct | undefined>(
         product
     );
@@ -34,16 +34,10 @@ const UpdateProductModal = ({ product, reloadPage }: Props) => {
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        /* {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                } */
         if (newProduct) {
             apiClient
                 .post("/update-product", {})
                 .then(() => {
-                    // console.log("Upload Success:", res);
                     reloadPage();
                 })
                 .catch((e) => {
@@ -54,7 +48,7 @@ const UpdateProductModal = ({ product, reloadPage }: Props) => {
 
     useEffect(() => {
         apiClient
-            .get<Category[]>("api/categories/")
+            .get<CategoryInf[]>("api/categories/")
             .then(({ data: list }) => {
                 setCategoryList(list);
             })

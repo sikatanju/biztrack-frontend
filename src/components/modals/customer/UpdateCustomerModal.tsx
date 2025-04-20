@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { Customer } from "../../../pages/dashboard/Customer";
 import apiClient from "../../../utils/apiClient";
+import { CustomerInf } from "../../../utils/types";
 
 interface Props {
-    customer: Customer | undefined;
+    customer: CustomerInf | undefined;
     reloadPage: () => void;
 }
 
 const UpdateCustomerModal = ({ customer, reloadPage }: Props) => {
     const closeButton = useRef<HTMLButtonElement>(null);
     const [updatedCustomer, setUpdatedCustomer] = useState<
-        Customer | undefined
+        CustomerInf | undefined
     >(customer);
     const [errorMessage, setErrorMessage] = useState<string>("");
 

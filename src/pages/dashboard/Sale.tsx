@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
-import { Customer } from "./Customer";
 import apiClient from "../../utils/apiClient";
 import {
     createCustomDataTable,
@@ -8,6 +7,7 @@ import {
 } from "../../utils/createDataTable";
 import { Product } from "./ProductPage";
 import { useNavigate } from "react-router";
+import { CustomerInf } from "../../utils/types";
 
 interface Cart {
     product_id: number;
@@ -29,7 +29,7 @@ const Sale = () => {
     const [payable, setPayable] = useState<number>(0);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [customerList, setCustomerList] = useState<Customer[]>([]);
+    const [customerList, setCustomerList] = useState<CustomerInf[]>([]);
     const [productList, setProductList] = useState<Product[]>([]);
 
     const customerTable = useRef<HTMLTableElement>(null);

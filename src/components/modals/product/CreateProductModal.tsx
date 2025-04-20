@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useRef, useState } from "react";
-import { Category } from "../../../pages/dashboard/Category.1";
 import apiClient from "../../../utils/apiClient";
+import { CategoryInf } from "../../../utils/types";
 
 export interface NewProduct {
     id: string;
@@ -21,7 +21,7 @@ const CreateProductModal = ({ realoadPage }: Props) => {
 
     const [newImage, setNewImage] = useState<File | null>();
     const [newImageUrl, setNewImageUrl] = useState<string>();
-    const [categoryList, setCategoryList] = useState<Category[]>();
+    const [categoryList, setCategoryList] = useState<CategoryInf[]>();
 
     const closeBtn = useRef<HTMLButtonElement>(null);
 
@@ -121,7 +121,7 @@ const CreateProductModal = ({ realoadPage }: Props) => {
 
     useEffect(() => {
         apiClient
-            .get<Category[]>("api/categories/")
+            .get<CategoryInf[]>("api/categories/")
             .then(({ data: list }) => {
                 setCategoryList(list);
             })

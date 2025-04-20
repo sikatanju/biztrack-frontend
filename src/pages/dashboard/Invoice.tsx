@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import apiClient from "../../utils/apiClient";
-import { Customer } from "./Customer";
 import {
     createCustomDataTable,
     destroyDataTable,
@@ -8,6 +7,7 @@ import {
 import { Link } from "react-router";
 import ViewInvoiceModal from "../../components/modals/invoice/ViewInvoiceModal";
 import DeleteInvoiceModal from "../../components/modals/invoice/DeleteInvoiceModal";
+import { CustomerInf } from "../../utils/types";
 
 export interface Invoice {
     id: number;
@@ -16,7 +16,7 @@ export interface Invoice {
     vat: string;
     payable: string;
     user_id: number;
-    customer: Customer;
+    customer: CustomerInf;
 }
 
 const Invoice = () => {
@@ -28,7 +28,7 @@ const Invoice = () => {
     const [invoiceList, setInvoiceList] = useState<Invoice[]>([]);
 
     const [invoice, setInvoice] = useState<Invoice>();
-    const [customer, setCustomer] = useState<Customer>();
+    const [customer, setCustomer] = useState<CustomerInf>();
     const [deleteInvoiceId, setDeleteInvoiceId] = useState<number>();
 
     const reloadPage = () => {

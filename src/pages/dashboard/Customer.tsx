@@ -4,25 +4,17 @@ import { createDataTable, destroyDataTable } from "../../utils/createDataTable";
 import UpdateCustomerModal from "../../components/modals/customer/UpdateCustomerModal";
 import DeleteCustomerModal from "../../components/modals/customer/DeleteCustomerModal";
 import CreateCustomerModal from "../../components/modals/customer/CreateCustomerModal";
+import { CustomerInf } from "../../utils/types";
 
-export interface Customer {
-    id: number;
-    name: string;
-    email: string;
-    phone: string;
-    user_id: number;
-    created_at: string;
-    updated_at: string;
-}
 
 const Customer = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [customerList, setCustomerList] = useState<Customer[]>([]);
+    const [customerList, setCustomerList] = useState<CustomerInf[]>([]);
 
     const customerTable = useRef<HTMLTableElement>(null);
     const customerTableInstance = useRef<DataTables.Api | null>(null);
 
-    const [updateCustomer, setUpdateCustomer] = useState<Customer>();
+    const [updateCustomer, setUpdateCustomer] = useState<CustomerInf>();
     const [deleteCustomerId, setDeleteCustomerId] = useState<number>(-1);
 
     const handleUpdateCustomer = (customerId: number) => {
@@ -37,7 +29,7 @@ const Customer = () => {
     const fetchCustomerData = () => {
         setIsLoading(true);
         apiClient
-            .get<Customer[]>("api/customers/")
+            .get<CustomerInf[]>("api/customers/")
             .then(({ data: customers }) => {
                 setCustomerList(customers);
                 setIsLoading(false);
@@ -87,7 +79,7 @@ const Customer = () => {
                         <div className="card px-5 py-5">
                             <div className="row justify-content-between ">
                                 <div className="align-items-center col">
-                                    <h4>Customer</h4>
+                                    <h4>CustomerInf</h4>
                                 </div>
                                 <div className="align-items-center col">
                                     <button
