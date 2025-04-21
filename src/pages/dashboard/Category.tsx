@@ -41,7 +41,7 @@ const Category = () => {
     };
 
     useEffect(() => {
-        if (categoryList && categoryList.length > 0 && dataTable.current) {
+        if (categoryList && dataTable.current) {
             if (dataTableInstance.current) {
                 destroyDataTable(dataTableInstance.current);
             }
@@ -77,7 +77,7 @@ const Category = () => {
                         <div className="card px-5 py-5">
                             <div className="row justify-content-between ">
                                 <div className="align-items-center col">
-                                    <h4>Category List</h4>
+                                    <h4>Category</h4>
                                 </div>
                                 <div className="align-items-center col">
                                     <button
@@ -90,70 +90,82 @@ const Category = () => {
                                 </div>
                             </div>
                             <hr className="bg-secondary" />
-                            <div className="table-responsive">
-                                <table
-                                    className="display compact hover"
-                                    id="tableData"
-                                    ref={dataTable}
-                                >
-                                    <thead>
-                                        <tr className="bg-light">
-                                            <th>No</th>
-                                            <th>Category</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableList">
-                                        {categoryList.map((category, index) => (
-                                            <tr
-                                                key={category.id}
-                                                className={
-                                                    index % 2 === 0
-                                                        ? "even"
-                                                        : "odd"
-                                                }
-                                            >
-                                                <td className="sorting_1">
-                                                    {index + 1}
-                                                </td>
-                                                <td>
-                                                    <span className="h6">
-                                                        {category.title}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <button
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#update-modal"
-                                                        type="button"
-                                                        className="btn editBtn btn-sm btn-outline-success mx-1"
-                                                        onClick={() =>
-                                                            handleUpdateCategory(
-                                                                category
-                                                            )
+                            {categoryList ? (
+                                <div className="table-responsive">
+                                    <table
+                                        className="display compact hover"
+                                        id="tableData"
+                                        ref={dataTable}
+                                    >
+                                        <thead>
+                                            <tr className="bg-light">
+                                                <th>No</th>
+                                                <th>Category</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tableList">
+                                            {categoryList.map(
+                                                (category, index) => (
+                                                    <tr
+                                                        key={category.id}
+                                                        className={
+                                                            index % 2 === 0
+                                                                ? "even"
+                                                                : "odd"
                                                         }
                                                     >
-                                                        Edit
-                                                    </button>
-                                                    <button
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#delete-modal"
-                                                        type="button"
-                                                        className="btn deleteBtn btn-sm btn-outline-danger mx-1"
-                                                        onClick={() => {
-                                                            handleDeleteCategory(
-                                                                category.id
-                                                            );
-                                                        }}
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                                        <td className="sorting_1">
+                                                            {index + 1}
+                                                        </td>
+                                                        <td>
+                                                            <span className="h6">
+                                                                {category.title}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#update-modal"
+                                                                type="button"
+                                                                className="btn editBtn btn-sm btn-outline-success mx-1"
+                                                                onClick={() =>
+                                                                    handleUpdateCategory(
+                                                                        category
+                                                                    )
+                                                                }
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                            <button
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#delete-modal"
+                                                                type="button"
+                                                                className="btn deleteBtn btn-sm btn-outline-danger mx-1"
+                                                                onClick={() => {
+                                                                    handleDeleteCategory(
+                                                                        category.id
+                                                                    );
+                                                                }}
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ) : (
+                                <div>
+                                    <p className="text text-lg">
+                                        <span className="text-danger ">
+                                            No Category found...
+                                        </span>
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

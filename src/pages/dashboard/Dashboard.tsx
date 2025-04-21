@@ -39,13 +39,13 @@ const Dashboard = () => {
                     payable,
                 } = res.data;
                 setData({
-                    product: product,
-                    category,
-                    customer,
-                    invoice,
-                    total,
-                    vat,
-                    payable,
+                    product: product ? product : 0,
+                    category: category ? category : 0,
+                    customer: customer ? customer : 0,
+                    invoice: invoice ? invoice : 0,
+                    total: total ? total : 0.0,
+                    vat: vat ? vat : 0.0,
+                    payable: payable ? payable : 0.0,
                 });
                 setIsLoading(false);
             })
@@ -53,7 +53,7 @@ const Dashboard = () => {
                 console.log(e);
                 navigate("/login");
             });
-    }, []);
+    }, [])  ;
 
     if (isLoading) {
         return (
