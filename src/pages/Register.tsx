@@ -3,29 +3,27 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import apiClient from "../utils/apiClient";
 
+interface User {
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    mobile: string;
+}
+
 const Register = () => {
     const navigate = useNavigate();
 
-    const [firstName, setFirstName] = useState<string | undefined>();
-    const [lastName, setLastName] = useState<string | undefined>();
-    const [email, setEmail] = useState<string | undefined>();
-    const [mobile, setMobile] = useState<string | undefined>();
+    const [user, setUser] = useState<User>({
+        username: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        mobile: "",
+    });
     const [password, setPassword] = useState<string | undefined>();
     const [repeatPassword, setRepeatPassword] = useState<string | undefined>();
     const [registrationComplete, setRegistrationComplete] = useState(false);
-
-    const handleFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFirstName(e.target.value);
-    };
-    const handleLastName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLastName(e.target.value);
-    };
-    const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
-    const handleMobile = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setMobile(e.target.value);
-    };
 
     const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
 
@@ -56,26 +54,34 @@ const Register = () => {
         }, 3000);
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setUser((prev) => ({ ...prev, [name]: value }));
+    };
+
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        apiClient
-            .post("/user-registration", {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                password: password,
-                mobile: mobile,
-            })
-            .then((res) => {
-                if (res.data.status === "failed") {
-                    setRegistrationComplete(true);
-                    handleNavigation();
-                } else if (res.data.status === "success") {
-                    setRegistrationComplete(true);
-                    navigate("/login");
-                }
-            })
-            .catch((e) => console.log(e.message));
+        if (user.username && user.email) {
+            apiClient
+                .post("auth/users/", {
+                    username: user.username,
+                    first_name: user.firstName,
+                    last_name: user.lastName,
+                    mobile: user.mobile,
+                    email: user.email,
+                    password: password,
+                })
+                .then((res) => {
+                    if (res.data.status === "failed") {
+                        setRegistrationComplete(true);
+                        handleNavigation();
+                    } else if (res.data) {
+                        setRegistrationComplete(true);
+                        navigate("/login");
+                    }
+                })
+                .catch((e) => console.log(e.message));
+        }
     };
 
     useEffect(() => {
@@ -98,42 +104,22 @@ const Register = () => {
                                     <form onSubmit={handleFormSubmit}>
                                         <div className="row m-0 p-0">
                                             <div className="col-md-4 p-2">
-                                                <label>
-                                                    <h6>First Name</h6>
+                                                <label htmlFor="username">
+                                                    <h6>Username</h6>
                                                 </label>
                                                 <input
-                                                    id="firstName"
-                                                    placeholder="First Name"
+                                                    id="username"
+                                                    placeholder="User Email"
                                                     className="form-control"
-                                                    type="text"
-                                                    value={firstName}
-                                                    onChange={(e) =>
-                                                        handleFirstName(e)
-                                                    }
+                                                    type="username"
+                                                    name="username"
+                                                    value={user.email}
+                                                    onChange={handleInputChange}
                                                     required
                                                 />
                                             </div>
                                             <div className="col-md-4 p-2">
-                                                <label>
-                                                    <h6>Last Name</h6>
-                                                </label>
-                                                <input
-                                                    id="lastName"
-                                                    placeholder="Last Name"
-                                                    className="form-control"
-                                                    type="text"
-                                                    value={lastName}
-                                                    onChange={(e) =>
-                                                        handleLastName(e)
-                                                    }
-                                                    required
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="row m-0 p-0">
-                                            <div className="col-md-4 p-2">
-                                                <label>
+                                                <label htmlFor="email">
                                                     <h6>Email Address</h6>
                                                 </label>
                                                 <input
@@ -141,16 +127,49 @@ const Register = () => {
                                                     placeholder="User Email"
                                                     className="form-control"
                                                     type="email"
-                                                    value={email}
-                                                    onChange={(e) =>
-                                                        handleEmail(e)
-                                                    }
+                                                    name="email"
+                                                    value={user.email}
+                                                    onChange={handleInputChange}
                                                     required
                                                 />
                                             </div>
-
+                                        </div>
+                                        <div className="row m-0 p-0">
                                             <div className="col-md-4 p-2">
-                                                <label>
+                                                <label htmlFor="firstName">
+                                                    <h6>First Name</h6>
+                                                </label>
+                                                <input
+                                                    id="firstName"
+                                                    placeholder="First Name"
+                                                    className="form-control"
+                                                    type="text"
+                                                    name="firstName"
+                                                    value={user.firstName}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="col-md-4 p-2">
+                                                <label htmlFor="lastName">
+                                                    <h6>Last Name</h6>
+                                                </label>
+                                                <input
+                                                    id="lastName"
+                                                    placeholder="Last Name"
+                                                    className="form-control"
+                                                    type="text"
+                                                    name="lastName"
+                                                    value={user.lastName}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="row m-0 p-0">
+                                            <div className="col-md-4 p-2">
+                                                <label htmlFor="mobile">
                                                     <h6>Mobile Number</h6>
                                                 </label>
                                                 <input
@@ -158,17 +177,14 @@ const Register = () => {
                                                     placeholder="Mobile"
                                                     className="form-control"
                                                     type="mobile"
-                                                    value={mobile}
-                                                    onChange={(e) =>
-                                                        handleMobile(e)
-                                                    }
+                                                    name="mobile"
+                                                    value={user.mobile}
+                                                    onChange={handleInputChange}
                                                     required
                                                 />
                                             </div>
-                                        </div>
-                                        <div className="row m-0 p-0">
                                             <div className="col-md-4 p-2">
-                                                <label>
+                                                <label htmlFor="password">
                                                     <h6>Password</h6>
                                                 </label>
                                                 <input
@@ -176,15 +192,14 @@ const Register = () => {
                                                     placeholder="Password"
                                                     className="form-control"
                                                     type="password"
+                                                    name="password"
                                                     value={password}
-                                                    onChange={(e) =>
-                                                        handlePassword(e)
-                                                    }
+                                                    onChange={handlePassword}
                                                     required
                                                 />
                                             </div>
                                             <div className="col-md-4 p-2">
-                                                <label>
+                                                <label htmlFor="repeat-password">
                                                     <h6>Repeat Password</h6>
                                                 </label>
                                                 <input
@@ -192,14 +207,16 @@ const Register = () => {
                                                     placeholder="Repeat Password"
                                                     className="form-control"
                                                     type="password"
+                                                    name="repeatPassword"
                                                     value={repeatPassword}
-                                                    onChange={(e) =>
-                                                        handleRepeatPassword(e)
+                                                    onChange={
+                                                        handleRepeatPassword
                                                     }
                                                     required
                                                 />
                                             </div>
                                         </div>
+
                                         {!passwordMatch && (
                                             <p className="text-danger mx-2">
                                                 Password do not match
