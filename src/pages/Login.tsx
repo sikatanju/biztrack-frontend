@@ -18,20 +18,37 @@ const Login = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
+        const refreshToken = localStorage.getItem("refreshToken");
+
         if (token) {
             apiClient
                 .post("auth/jwt/verify/", {
-                    token: token.substring(3),
+                    token: token.substring(4),
                 })
                 .then((res) => {
                     if (res.status === 200) {
-                        console.log("Okay -- " + res);
                         navigate("/dashboard");
                     }
                 })
-                .catch(() => {
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("refreshToken");
+                .catch((e) => {
+                    if (e.response.status === 401 && refreshToken) {
+                        apiClient
+                            .post("auth/jwt/refresh/", {
+                                refresh: refreshToken,
+                            })
+                            .then((res) => {
+                                if (res.status === 200) {
+                                    if (res.data.access) 
+                                        localStorage.setItem("token", "JWT " + res.data.access);
+
+                                    navigate("/dashboard");
+                                }
+                            })
+                            .catch((e) => console.log(e));
+                    } else {
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("refreshToken");
+                    }
                 });
         }
     }, [navigate]);

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient from "../../utils/apiClient";
+import { useNavigate } from "react-router";
 
 interface DashboardData {
     product: number;
@@ -13,6 +14,7 @@ interface DashboardData {
 
 const Dashboard = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
     const [data, setData] = useState<DashboardData>({
         product: 0,
         category: 0,
@@ -24,28 +26,33 @@ const Dashboard = () => {
     });
     useEffect(() => {
         setIsLoading(true);
-        apiClient.get("api/summary").then((res) => {
-            const {
-                product,
-                category,
-                customer,
-                invoice,
-                total,
-                vat,
-                payable,
-            } = res.data;
-            setData({
-                product: product,
-                category,
-                customer,
-                invoice,
-                total,
-                vat,
-                payable,
+        apiClient
+            .get("api/summary")
+            .then((res) => {
+                const {
+                    product,
+                    category,
+                    customer,
+                    invoice,
+                    total,
+                    vat,
+                    payable,
+                } = res.data;
+                setData({
+                    product: product,
+                    category,
+                    customer,
+                    invoice,
+                    total,
+                    vat,
+                    payable,
+                });
+                setIsLoading(false);
+            })
+            .catch((e) => {
+                console.log(e);
+                navigate("/login");
             });
-            setIsLoading(false);
-        }).catch(e => console.log(e)
-        );
     }, []);
 
     if (isLoading) {

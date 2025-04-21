@@ -81,7 +81,7 @@ const Register = () => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
-            navigate("/dashboard");
+            navigate("/login");
         }
     }, [navigate]);
 
