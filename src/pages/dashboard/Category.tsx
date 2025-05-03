@@ -77,7 +77,9 @@ const Category = () => {
                         <div className="card px-5 py-5">
                             <div className="row justify-content-between ">
                                 <div className="align-items-center col">
-                                    <h4>Category</h4>
+                                    <h4 className="text-black-50">
+                                        Category
+                                    </h4>
                                 </div>
                                 <div className="align-items-center col">
                                     <button
@@ -91,7 +93,7 @@ const Category = () => {
                             </div>
                             <hr className="bg-secondary" />
                             {categoryList ? (
-                                <div className="table-responsive">
+                                <div className="table-responsive text-black-50 text-sm">
                                     <table
                                         className="display compact hover"
                                         id="tableData"
@@ -119,7 +121,7 @@ const Category = () => {
                                                             {index + 1}
                                                         </td>
                                                         <td>
-                                                            <span className="h6">
+                                                            <span className="h6 text-black-50">
                                                                 {category.title}
                                                             </span>
                                                         </td>
@@ -128,7 +130,7 @@ const Category = () => {
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#update-modal"
                                                                 type="button"
-                                                                className="btn editBtn btn-sm btn-outline-success mx-1"
+                                                                className="btn editBtn btn-sm btn-outline-success mx-1 text-black-50"
                                                                 onClick={() =>
                                                                     handleUpdateCategory(
                                                                         category

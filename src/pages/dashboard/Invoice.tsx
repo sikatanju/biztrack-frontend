@@ -87,7 +87,7 @@ const Invoice = () => {
                             </div>
                             <hr className="bg-dark " />
                             <table
-                                className="display"
+                                className="display text-black-50"
                                 id="invoiceTable"
                                 aria-describedby="invoiceTable_info"
                                 ref={invoiceTable}
@@ -104,7 +104,7 @@ const Invoice = () => {
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="invoiceList">
+                                <tbody id="invoiceList text-black-50">
                                     {invoiceList.map((invoice, idx) => (
                                         <tr key={idx}>
                                             <td>{idx + 1}</td>
@@ -117,7 +117,7 @@ const Invoice = () => {
                                             <td className="d-flex flex-row gap-x-px">
                                                 <button
                                                     type="button"
-                                                    className="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 mx-1"
+                                                    className="viewBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 mx-1 text-black-50"
                                                     data-bs-target=".details-modal"
                                                     data-bs-toggle="modal"
                                                     onClick={() => {
@@ -131,7 +131,7 @@ const Invoice = () => {
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    className="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0"
+                                                    className="deleteBtn btn btn-outline-dark text-sm px-3 py-1 btn-sm m-0 text-black-50"
                                                     data-bs-target=".deleteModal"
                                                     data-bs-toggle="modal"
                                                     onClick={() => {
@@ -152,7 +152,7 @@ const Invoice = () => {
                 </div>
             </div>
 
-             <ViewInvoiceModal customer={customer} invoice={invoice} />
+            <ViewInvoiceModal customer={customer} invoice={invoice} />
             <DeleteInvoiceModal id={deleteInvoiceId} reloadPage={reloadPage} />
         </>
     );

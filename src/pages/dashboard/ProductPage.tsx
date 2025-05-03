@@ -91,7 +91,7 @@ const ProductPage = () => {
                         <div className="card px-5 py-5">
                             <div className="row justify-content-between ">
                                 <div className="align-items-center col">
-                                    <h4>Product</h4>
+                                    <h4 className="text-black-50">Product</h4>
                                 </div>
                                 <div className="align-items-center col">
                                     <button
@@ -104,9 +104,9 @@ const ProductPage = () => {
                                 </div>
                             </div>
                             <hr className="bg-dark " />
-                            <div className="table-responsive">
+                            <div className="table-responsive text-black-50 text-sm">
                                 <table
-                                    className="display stripe cell-border hover"
+                                    className="display stripe cell-border hover text-black-50"
                                     id="tableData"
                                     ref={productTableRef}
                                 >
@@ -144,7 +144,7 @@ const ProductPage = () => {
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#update-modal"
                                                         type="button"
-                                                        className="btn editBtn btn-sm btn-outline-success mx-1"
+                                                        className="btn editBtn btn-sm btn-outline-success mx-1 text-black-50"
                                                         onClick={() =>
                                                             handleUpdateProduct(
                                                                 product.id

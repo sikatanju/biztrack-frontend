@@ -261,20 +261,20 @@ const Sale = () => {
                                     <span className="text-bold text-dark">
                                         BILLED TO
                                     </span>
-                                    <p className="text-xs mx-0 my-1">
+                                    <p className="text-xs mx-0 my-1 text-black-50">
                                         Name:{" "}
                                         <span id="CName">{customerName}</span>{" "}
                                     </p>
-                                    <p className="text-xs mx-0 my-1">
+                                    <p className="text-xs mx-0 my-1 text-black-50">
                                         Email:{" "}
                                         <span id="CEmail">{customerEmail}</span>
                                     </p>
-                                    <p className="text-xs mx-0 my-1">
+                                    <p className="text-xs mx-0 my-1 text-black-50">
                                         User ID:{" "}
                                         <span id="CId">{customerUserId}</span>{" "}
                                     </p>
                                 </div>
-                                <div className="col-4">
+                                <div className="col-4 text-black-50">
                                     <img
                                         className="w-50"
                                         src="images/BizTrack_Logo.png"
@@ -291,7 +291,7 @@ const Sale = () => {
                             <div className="row">
                                 <div className="col-12">
                                     <table
-                                        className="table w-100"
+                                        className="table w-100 text-black-50"
                                         id="invoiceTable"
                                         aria-describedby="cartTable_info"
                                     >
@@ -308,7 +308,7 @@ const Sale = () => {
                                             id="invoiceList"
                                         >
                                             {cart.map((prod) => (
-                                                <tr className="text-xs">
+                                                <tr className="text-xs text-black-50">
                                                     <td>{prod.product_name}</td>
                                                     <td>{prod.qty}</td>
                                                     <td>
@@ -320,7 +320,7 @@ const Sale = () => {
                                                     <td>
                                                         <a
                                                             data-index="0"
-                                                            className="btn remove text-xxs px-2 py-1  btn-sm m-0"
+                                                            className="btn remove text-xxs px-2 py-1  btn-sm m-0 text-black-50 bg-success"
                                                             onClick={() =>
                                                                 removeFromCart(
                                                                     prod.product_id,
@@ -340,44 +340,46 @@ const Sale = () => {
                                     </table>
                                 </div>
                             </div>
-                            <hr className="mx-0 my-2 p-0 bg-secondary" />
-                            <div className="row">
-                                <div className="col-12">
-                                    <p className="text-bold text-xs my-1 text-dark">
+                            <hr className="mx-0 my-2 p-0 bg-secondary text-black-50" />
+                            <div className="row text-black-50">
+                                <div className="col-12 text-black-50">
+                                    <p className="text-bold text-xs my-1 text-dark text-black-50">
                                         {" "}
                                         Subtotal:{" "}
                                         <i className="bi bi-currency-dollar"></i>{" "}
                                         <span id="total">{subtotal}</span>
                                     </p>
-                                    <p className="text-bold text-xs my-1 text-dark">
+                                    <p className="text-bold text-xs my-1 text-dark text-black-50">
                                         {" "}
                                         VAT(5%):{" "}
                                         <i className="bi bi-currency-dollar"></i>{" "}
                                         <span id="vat">{vat}</span>
                                     </p>
-                                    <p className="text-bold text-xs my-1 text-dark">
+                                    <p className="text-bold text-xs my-1 text-dark text-black-50">
                                         Discount:{" "}
                                         <i className="bi bi-currency-dollar"></i>
-                                        <span id="discount">{discount}</span>
+                                        <span id="discount text-black-50">
+                                            {discount}
+                                        </span>
                                     </p>
-                                    <p className="text-bold text-xs my-2 text-dark">
+                                    <p className="text-bold text-xs my-2 text-black-50">
                                         {" "}
                                         PAYABLE:{" "}
                                         <i className="bi bi-currency-dollar"></i>{" "}
                                         <span id="payable">{payable}</span>
                                     </p>
-                                    <span className="text-xxs">
+                                    <span className="text-xs text-black-50">
                                         Discount(%):
                                     </span>
                                     <input
                                         type="number"
                                         value={discount}
-                                        className="form-control w-40 "
+                                        className="form-control w-40"
                                         onChange={handleDiscount}
                                     />
                                     <p>
                                         <button
-                                            className="btn  my-3 bg-gradient-success w-40 text-white"
+                                            className="btn  my-3 bg-gradient-success w-40 text-black-50"
                                             onClick={createInvoice}
                                         >
                                             Confirm
@@ -396,7 +398,7 @@ const Sale = () => {
                                 className="dataTables_wrapper no-footer"
                             >
                                 <table
-                                    className="display"
+                                    className="display text-black-50"
                                     id="productTable"
                                     aria-describedby="productTable_info"
                                     ref={productTable}
@@ -426,7 +428,10 @@ const Sale = () => {
                                             </td>
                                         </tr>
                                     </thead>
-                                    <tbody className="w-100" id="productList">
+                                    <tbody
+                                        className="w-100 text-black-50"
+                                        id="productList"
+                                    >
                                         {productList.map((prod, idx) => (
                                             <tr className={getClassName(idx)}>
                                                 <td className="sorting_1">
@@ -443,7 +448,7 @@ const Sale = () => {
                                                         data-product-id={
                                                             prod.id
                                                         }
-                                                        className="btn btn-outline-dark text-xxs px-2 py-1 addProduct  btn-sm m-0"
+                                                        className="btn btn-outline-dark text-xxs px-2 py-1 addProduct bg-success  btn-sm m-0 text-black-50"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#create-modal"
                                                         onClick={(e) =>
@@ -470,13 +475,13 @@ const Sale = () => {
                                 className="dataTables_wrapper no-footer"
                             >
                                 <table
-                                    className="display"
+                                    className="display text-black-50"
                                     id="customerTable"
                                     aria-describedby="customerTable_info"
                                     ref={customerTable}
                                 >
                                     <thead className="w-100">
-                                        <tr className="text-xs text-bold">
+                                        <tr className="text-xs text-bold text-black-50">
                                             <td
                                                 className="sorting sorting_desc"
                                                 tabIndex={0}
@@ -512,7 +517,7 @@ const Sale = () => {
                                                         data-name={cus.name}
                                                         data-email={cus.email}
                                                         data-id={cus.id}
-                                                        className="btn btn-outline-dark addCustomer  text-xxs px-2 py-1  btn-sm m-0"
+                                                        className="btn btn-outline-dark addCustomer  text-xxs px-2 py-1  btn-sm m-0 bg-success text-black-50"
                                                         onClick={(e) =>
                                                             handleCustomerSelect(
                                                                 e
@@ -611,7 +616,7 @@ const Sale = () => {
                                     <button
                                         onClick={addToCart}
                                         id="save-btn"
-                                        className="btn bg-gradient-success"
+                                        className="btn bg-success"
                                     >
                                         Add
                                     </button>

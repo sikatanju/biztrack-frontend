@@ -72,13 +72,13 @@ const Customer = () => {
 
     return (
         <div>
-            <div className="container-fluid">
+            <div className="container-fluid ">
                 <div className="row">
                     <div className="col-md-12 col-sm-12 col-lg-12">
                         <div className="card px-5 py-5">
                             <div className="row justify-content-between ">
                                 <div className="align-items-center col">
-                                    <h4>Customer</h4>
+                                    <h4 className="text-black-50">Customer</h4>
                                 </div>
                                 <div className="align-items-center col">
                                     <button
@@ -92,7 +92,7 @@ const Customer = () => {
                             </div>
                             <hr className="bg-dark " />
                             {customerList ? (
-                                <div className="table-responsive">
+                                <div className="table-responsive text-black-50 text-sm">
                                     <table
                                         className="display hover"
                                         id="tableData"
@@ -120,7 +120,9 @@ const Customer = () => {
                                                         <td className="sorting_1">
                                                             {index + 1}
                                                         </td>
-                                                        <td>{customer.name}</td>
+                                                        <td className="">
+                                                            {customer.name}
+                                                        </td>
                                                         <td>
                                                             {customer.email}
                                                         </td>
@@ -132,7 +134,7 @@ const Customer = () => {
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#update-modal"
                                                                 type="button"
-                                                                className="btn editBtn btn-sm btn-outline-success mx-1"
+                                                                className="btn editBtn btn-sm btn-outline-success mx-1 bg-white text-black-50"
                                                                 onClick={() =>
                                                                     handleUpdateCustomer(
                                                                         customer.id

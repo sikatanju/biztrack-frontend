@@ -24964,7 +24964,7 @@ p,
 }
 
 .text-sm {
-    font-size: 0.875rem !important;
+    font-size: 1rem !important;
 }
 
 .text-xs {
@@ -25076,7 +25076,7 @@ p {
 }
 
 .text-black-50 {
-    color: rgba(0, 0, 0, 0.5) !important;
+    color: rgba(0, 0, 0, 1) !important;
 }
 
 .text-white-50 {
