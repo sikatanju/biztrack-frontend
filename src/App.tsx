@@ -13,6 +13,7 @@ import Product from "./pages/dashboard/ProductPage";
 import Sale from "./pages/dashboard/Sale";
 import Invoice from "./pages/dashboard/Invoice";
 import Report from "./pages/dashboard/Report";
+import GoogleLogin from "./pages/GoogleLogin";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/" element={<Index />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/auth/callback" element={<GoogleLogin />} />
                 <Route path="" element={<DashboardLayout />}>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/profile" element={<UserProfile />} />

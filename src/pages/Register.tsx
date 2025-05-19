@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import apiClient from "../utils/apiClient";
 
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 interface User {
     username: string;
     email: string;
@@ -91,188 +92,234 @@ const Register = () => {
         }
     }, [navigate]);
 
+    const initiateGoogleLogin = async () => {
+        try {
+            const response = await fetch(
+                // "http://localhost:8000/accounts/google/login"
+                "http://localhost:8000/api/auth/google/initiate/"
+            );
+            const data = await response.json();
+            console.log(data);
+            window.location.href = data.authorization_url; // Redirect to Google
+        } catch (error) {
+            console.error("Error initiating Google login:", error);
+        }
+    };
+
     return (
-        <div>
-            <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-md-10 col-lg-10 center-screen">
-                        <div className="card animated fadeIn w-100 p-3">
-                            <div className="card-body">
-                                <h4>Sign Up Form</h4>
-                                <hr />
-                                <div className="container-fluid p-0">
-                                    <form onSubmit={handleFormSubmit}>
-                                        <div className="row m-0 p-0">
-                                            <div className="col-md-4 p-2">
-                                                <label htmlFor="username">
-                                                    <h6>Username</h6>
-                                                </label>
-                                                <input
-                                                    id="username"
-                                                    placeholder="User Email"
-                                                    className="form-control"
-                                                    type="username"
-                                                    name="username"
-                                                    value={user.email}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                />
+        <>
+            <div>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-md-10 col-lg-10 center-screen">
+                            <div className="card animated fadeIn w-100 p-3">
+                                <div className="card-body">
+                                    <h4>Sign Up Form</h4>
+                                    <hr />
+                                    <div className="container-fluid p-0">
+                                        <form onSubmit={handleFormSubmit}>
+                                            <div className="row m-0 p-0">
+                                                <div className="col-md-4 p-2">
+                                                    <label htmlFor="username">
+                                                        <h6>Username</h6>
+                                                    </label>
+                                                    <input
+                                                        id="username"
+                                                        placeholder="User Email"
+                                                        className="form-control"
+                                                        type="username"
+                                                        name="username"
+                                                        value={user.email}
+                                                        onChange={
+                                                            handleInputChange
+                                                        }
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="col-md-4 p-2">
+                                                    <label htmlFor="email">
+                                                        <h6>Email Address</h6>
+                                                    </label>
+                                                    <input
+                                                        id="email"
+                                                        placeholder="User Email"
+                                                        className="form-control"
+                                                        type="email"
+                                                        name="email"
+                                                        value={user.email}
+                                                        onChange={
+                                                            handleInputChange
+                                                        }
+                                                        required
+                                                    />
+                                                </div>
                                             </div>
-                                            <div className="col-md-4 p-2">
-                                                <label htmlFor="email">
-                                                    <h6>Email Address</h6>
-                                                </label>
-                                                <input
-                                                    id="email"
-                                                    placeholder="User Email"
-                                                    className="form-control"
-                                                    type="email"
-                                                    name="email"
-                                                    value={user.email}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                />
+                                            <div className="row m-0 p-0">
+                                                <div className="col-md-4 p-2">
+                                                    <label htmlFor="firstName">
+                                                        <h6>First Name</h6>
+                                                    </label>
+                                                    <input
+                                                        id="firstName"
+                                                        placeholder="First Name"
+                                                        className="form-control"
+                                                        type="text"
+                                                        name="firstName"
+                                                        value={user.firstName}
+                                                        onChange={
+                                                            handleInputChange
+                                                        }
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="col-md-4 p-2">
+                                                    <label htmlFor="lastName">
+                                                        <h6>Last Name</h6>
+                                                    </label>
+                                                    <input
+                                                        id="lastName"
+                                                        placeholder="Last Name"
+                                                        className="form-control"
+                                                        type="text"
+                                                        name="lastName"
+                                                        value={user.lastName}
+                                                        onChange={
+                                                            handleInputChange
+                                                        }
+                                                        required
+                                                    />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="row m-0 p-0">
-                                            <div className="col-md-4 p-2">
-                                                <label htmlFor="firstName">
-                                                    <h6>First Name</h6>
-                                                </label>
-                                                <input
-                                                    id="firstName"
-                                                    placeholder="First Name"
-                                                    className="form-control"
-                                                    type="text"
-                                                    name="firstName"
-                                                    value={user.firstName}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                />
-                                            </div>
-                                            <div className="col-md-4 p-2">
-                                                <label htmlFor="lastName">
-                                                    <h6>Last Name</h6>
-                                                </label>
-                                                <input
-                                                    id="lastName"
-                                                    placeholder="Last Name"
-                                                    className="form-control"
-                                                    type="text"
-                                                    name="lastName"
-                                                    value={user.lastName}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                />
-                                            </div>
-                                        </div>
 
-                                        <div className="row m-0 p-0">
-                                            <div className="col-md-4 p-2">
-                                                <label htmlFor="mobile">
-                                                    <h6>Mobile Number</h6>
-                                                </label>
-                                                <input
-                                                    id="mobile"
-                                                    placeholder="Mobile"
-                                                    className="form-control"
-                                                    type="mobile"
-                                                    name="mobile"
-                                                    value={user.mobile}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                />
+                                            <div className="row m-0 p-0">
+                                                <div className="col-md-4 p-2">
+                                                    <label htmlFor="mobile">
+                                                        <h6>Mobile Number</h6>
+                                                    </label>
+                                                    <input
+                                                        id="mobile"
+                                                        placeholder="Mobile"
+                                                        className="form-control"
+                                                        type="mobile"
+                                                        name="mobile"
+                                                        value={user.mobile}
+                                                        onChange={
+                                                            handleInputChange
+                                                        }
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="col-md-4 p-2">
+                                                    <label htmlFor="password">
+                                                        <h6>Password</h6>
+                                                    </label>
+                                                    <input
+                                                        id="password"
+                                                        placeholder="Password"
+                                                        className="form-control"
+                                                        type="password"
+                                                        name="password"
+                                                        value={password}
+                                                        onChange={
+                                                            handlePassword
+                                                        }
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="col-md-4 p-2">
+                                                    <label htmlFor="repeat-password">
+                                                        <h6>Repeat Password</h6>
+                                                    </label>
+                                                    <input
+                                                        id="repeat-password"
+                                                        placeholder="Repeat Password"
+                                                        className="form-control"
+                                                        type="password"
+                                                        name="repeatPassword"
+                                                        value={repeatPassword}
+                                                        onChange={
+                                                            handleRepeatPassword
+                                                        }
+                                                        required
+                                                    />
+                                                </div>
                                             </div>
-                                            <div className="col-md-4 p-2">
-                                                <label htmlFor="password">
-                                                    <h6>Password</h6>
-                                                </label>
-                                                <input
-                                                    id="password"
-                                                    placeholder="Password"
-                                                    className="form-control"
-                                                    type="password"
-                                                    name="password"
-                                                    value={password}
-                                                    onChange={handlePassword}
-                                                    required
-                                                />
-                                            </div>
-                                            <div className="col-md-4 p-2">
-                                                <label htmlFor="repeat-password">
-                                                    <h6>Repeat Password</h6>
-                                                </label>
-                                                <input
-                                                    id="repeat-password"
-                                                    placeholder="Repeat Password"
-                                                    className="form-control"
-                                                    type="password"
-                                                    name="repeatPassword"
-                                                    value={repeatPassword}
-                                                    onChange={
-                                                        handleRepeatPassword
-                                                    }
-                                                    required
-                                                />
-                                            </div>
-                                        </div>
 
-                                        {!passwordMatch && (
-                                            <p className="text-danger mx-2">
-                                                Password do not match
-                                            </p>
-                                        )}
-                                        <div className="row m-0 p-0">
-                                            <div className="col-md-4 p-2 .sign-up-bg-color">
-                                                <button
-                                                    disabled={!passwordMatch}
-                                                    className="btn mt-3 w-100 bg-primary text-white"
-                                                >
-                                                    Sign Up
-                                                </button>
+                                            {!passwordMatch && (
+                                                <p className="text-danger mx-2">
+                                                    Password do not match
+                                                </p>
+                                            )}
+                                            <div className="row m-0 p-0">
+                                                <div className="col-md-4 p-2 .sign-up-bg-color">
+                                                    <button
+                                                        disabled={
+                                                            !passwordMatch
+                                                        }
+                                                        className="btn mt-3 w-100 bg-primary text-white"
+                                                    >
+                                                        Sign Up
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                    <div className="row m-0 p-0">
-                                        <div className="col-md-4 p-2">
-                                            <Link to="/">
-                                                <button className="btn mt-3 w-100  bg-primary text-white">
-                                                    Back to HomePage
-                                                </button>
-                                            </Link>
-                                        </div>
-                                        <div className="col-md-4 p-2 mt-4 .sign-up-bg-color">
-                                            <p>
-                                                Already got an account ?{" "}
-                                                <Link to="/login">
-                                                    <a className=" mt-3 register-login">
-                                                        Log in
-                                                    </a>
+                                        </form>
+                                        <div className="row m-0 p-0">
+                                            <div className="col-md-4 p-2">
+                                                <Link to="/">
+                                                    <button className="btn mt-3 w-100  bg-primary text-white">
+                                                        Back to HomePage
+                                                    </button>
                                                 </Link>
-                                            </p>
+                                            </div>
+                                            <div className="col-md-4 p-2 mt-4 .sign-up-bg-color">
+                                                <p>
+                                                    Already got an account ?{" "}
+                                                    <Link to="/login">
+                                                        <a className=" mt-3 register-login">
+                                                            Log in
+                                                        </a>
+                                                    </Link>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                {registrationComplete && (
-                                    <p className="fs-4 text-secondary">
-                                        Registration Successful.
-                                        <p>
-                                            Go to{" "}
-                                            <Link to="/login">
-                                                <span className="text-primary">
-                                                    Log in
-                                                </span>
-                                            </Link>{" "}
-                                            page
+                                    {registrationComplete && (
+                                        <p className="fs-4 text-secondary">
+                                            Registration Successful.
+                                            <p>
+                                                Go to{" "}
+                                                <Link to="/login">
+                                                    <span className="text-primary">
+                                                        Log in
+                                                    </span>
+                                                </Link>{" "}
+                                                page
+                                            </p>
                                         </p>
-                                    </p>
-                                )}
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            {/* <form
+                method="POST"
+                action="http://localhost:8000/auth/google/"
+                style={{ display: "inline" }}
+            >
+                <input
+                    type="hidden"
+                    name="callback_url"
+                    value="http://localhost:5173/auth/callback"
+                />
+                <input type="hidden" name="process" value="login" />
+                <button type="submit">Sign in with Google</button>
+            </form> */}
+            <div>
+                <button onClick={initiateGoogleLogin}>Google Sign IN</button>
+            </div>
+        </>
     );
 };
 
