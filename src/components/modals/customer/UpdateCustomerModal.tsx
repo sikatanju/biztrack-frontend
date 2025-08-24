@@ -24,7 +24,7 @@ const UpdateCustomerModal = ({ customer, reloadPage }: Props) => {
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         apiClient
-            .put(`api/customer/${updatedCustomer?.id}/`, {
+            .put(`api/customers/${updatedCustomer?.id}/`, {
                 id: updatedCustomer?.id,
                 name: updatedCustomer?.name,
                 email: updatedCustomer?.email,

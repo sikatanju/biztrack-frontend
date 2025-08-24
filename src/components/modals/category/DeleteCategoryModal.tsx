@@ -10,7 +10,7 @@ const DeleteCategoryModal = ({ categoryId, reloadPage }: Props) => {
     const closeButton = useRef<HTMLButtonElement>(null);
     const handleDelete = () => {
         apiClient
-            .delete(`api/category/${categoryId}/`)
+            .delete(`api/categories/${categoryId}/`)
             .then(() => {
                 if (closeButton.current) closeButton.current.click();
 

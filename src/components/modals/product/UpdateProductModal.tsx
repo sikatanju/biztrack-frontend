@@ -29,14 +29,24 @@ const UpdateProductModal = ({ product, reloadPage }: Props) => {
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
-        setNewProduct((prev) => ({ ...prev!, [name]: value }));
+        setNewProduct((prev) => ({
+            ...prev!,
+            [name]: name === "price" || name === "category" ? Number(value) : value,
+        }));
     };
 
     const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (newProduct) {
+            const payload = {
+                id: newProduct.id,
+                title: newProduct.name,   // map `name` → `title`
+                price: newProduct.price,
+                unit: newProduct.unit,
+                category: newProduct.category,
+            };
             apiClient
-                .post("/update-product", {})
+                .put(`api/products/${newProduct.id}/`, payload)
                 .then(() => {
                     reloadPage();
                 })
@@ -118,11 +128,25 @@ const UpdateProductModal = ({ product, reloadPage }: Props) => {
                                         <label className="form-label">
                                             Category
                                         </label>
+                                        {/* <select
+                                            className="form-control form-select"
+                                            id="productCategory"
+                                            name="category"
+                                            value={newProduct?.category}
+                                            onChange={handleInputChange}
+                                        >
+                                            {categoryList?.map((category) => (
+                                                <option value={category.id} key={category.id}>
+                                                    {category.title}
+                                                </option>
+                                            ))}
+                                        </select> */}
+
                                         <select
                                             typeof="text"
                                             className="form-control form-select"
                                             id="productCategory"
-                                            name="category_id"
+                                            name="category"
                                             onChange={handleInputChange}
                                         >
                                             <option

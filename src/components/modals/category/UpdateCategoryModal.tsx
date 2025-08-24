@@ -19,7 +19,7 @@ const UpdateCategoryModal = ({ category, reloadPage }: Props) => {
     const handleUpdateCategory = () => {
         if (category && category.id !== -1) {
             apiClient
-                .put(`api/category/${category.id}/`, {
+                .put(`api/categories/${category.id}/`, {
                     id: category,
                     title: newCategoryName,
                 })

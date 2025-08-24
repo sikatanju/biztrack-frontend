@@ -29,7 +29,7 @@ export interface InvoiceInf {
 export interface ProductInf {
     id: number;
     user_id: number;
-    category_id: number;
+    category: number;
     title: string;
     price: string;
     unit: string;

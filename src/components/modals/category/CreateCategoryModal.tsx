@@ -18,7 +18,7 @@ const CreateCategoryModal = ({ reloadPage }: Props) => {
     const handleCreateCategory = () => {
         if (newCategory) {
             apiClient
-                .post("api/category/", { title: newCategory })
+                .post("api/categories/", { title: newCategory })
                 .then((res) => {
                     console.log(res);
                     setNewCategory("");

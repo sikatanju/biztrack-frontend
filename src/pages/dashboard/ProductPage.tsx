@@ -32,7 +32,7 @@ const ProductPage = () => {
                 name: product.title,
                 price: product.price,
                 unit: product.unit,
-                category: product.category_id,
+                category: product.category,
             });
         }
     };
