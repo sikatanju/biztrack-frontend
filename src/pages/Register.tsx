@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import apiClient from "../utils/apiClient";
@@ -113,7 +112,7 @@ const Register = () => {
                                                     className="form-control"
                                                     type="username"
                                                     name="username"
-                                                    value={user.email}
+                                                    value={user.username}
                                                     onChange={handleInputChange}
                                                     required
                                                 />
